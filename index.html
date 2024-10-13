@@ -36,7 +36,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 1rem;
         }
 
         .content .box {
@@ -48,10 +48,11 @@
         }
 
         .changing-text-container {
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 300;
             color: #161616;
             display: flex;
+            flex-wrap: wrap;
             align-items: baseline;
             margin-bottom: 2rem;
             text-transform: lowercase;
@@ -62,12 +63,13 @@
             color: #0f62fe;
             margin-left: 0.5rem;
             display: inline-block;
-            min-width: 280px;
+            min-width: min(280px, 100%);
             transition: opacity 0.3s ease;
         }
 
         .text-columns {
             display: flex;
+            flex-direction: column;
             gap: 2rem;
             margin-top: 2rem;
         }
@@ -77,7 +79,7 @@
         }
 
         .static-text {
-            font-size: 1rem;
+            font-size: clamp(0.875rem, 2vw, 1rem);
             line-height: 1.5;
             color: #525252;
             margin-bottom: 1rem;
@@ -85,7 +87,7 @@
         }
 
         .closing-statement {
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 3vw, 1.25rem);
             font-weight: 600;
             color: #0f62fe;
             text-align: center;
@@ -102,17 +104,28 @@
             text-transform: lowercase;
         }
 
-        @media (max-width: 768px) {
-            .changing-text-container {
-                font-size: 2.5rem;
-            }
-
+        @media (min-width: 768px) {
             .text-columns {
-                flex-direction: column;
+                flex-direction: row;
             }
 
+            .content {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
             .content .box {
                 padding: 1.5rem;
+            }
+
+            .changing-text-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .changing-text {
+                margin-left: 0;
             }
         }
     </style>
