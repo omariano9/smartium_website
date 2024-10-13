@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smartium - advanced home automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            background-image: url('https://www.ibm.com/design/language/elements/patterns/grid/img/grid-05.svg');
+            background-size: 50%;
+            background-repeat: repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #161616;
+            color: #ffffff;
+            padding: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin: 0;
+            text-transform: lowercase;
+        }
+
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .content .box {
+            background-color: #ffffff;
+            padding: 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 80rem;
+        }
+
+        .changing-text-container {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #161616;
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 2rem;
+            text-transform: lowercase;
+        }
+
+        .changing-text {
+            font-weight: 600;
+            color: #0f62fe;
+            margin-left: 0.5rem;
+            display: inline-block;
+            min-width: 280px;
+            transition: opacity 0.3s ease;
+        }
+
+        .text-columns {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .static-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #525252;
+            margin-bottom: 1rem;
+            text-transform: none;
+        }
+
+        .closing-statement {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f62fe;
+            text-align: center;
+            margin-top: 2rem;
+            text-transform: lowercase;
+        }
+
+        footer {
+            background-color: #161616;
+            color: #f4f4f4;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.875rem;
+            text-transform: lowercase;
+        }
+
+        @media (max-width: 768px) {
+            .changing-text-container {
+                font-size: 2.5rem;
+            }
+
+            .text-columns {
+                flex-direction: column;
+            }
+
+            .content .box {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>smartium</h1>
+    </header>
+
+    <div class="content">
+        <div class="box">
+            <div class="changing-text-container">
+                smartium is <span class="changing-text" id="changing-text">innovation</span>
+            </div>
+            <div class="text-columns">
+                <div class="column">
+                    <p class="static-text">
+                        smartium represents the pinnacle of home automation technology, seamlessly integrating cutting-edge protocols like KNX and Matter to create an unparalleled smart living experience. Our state-of-the-art server harnesses the latest technological advancements, combining them into a cohesive and powerful smart home application. This ensures compatibility with a vast array of smart devices, offering you complete control over your environment through advanced voice commands and secure remote access.
+                    </p>
+                    <p class="static-text">
+                        Elevating beyond conventional automation, smartium incorporates AI-driven emergency detection, capable of identifying critical situations such as falls or intrusions, and initiating immediate, appropriate responses. Our system's robust security framework, built on certificate authority (CA) and mutual TLS (mTLS) encryption, safeguards your data and privacy at the highest level across all microservices.
+                    </p>
+                </div>
+                <div class="column">
+                    <p class="static-text">
+                        Experience a new dimension of personalized living with smartium's role-based permissions and voice recognition technology. The system adapts to individual users, offering tailored interfaces and control options based on voice-authenticated permissions. Our commitment to inclusivity is reflected in customizable themes, including considerations for color vision deficiencies and accessibility features for users with various abilities.
+                    </p>
+                    <p class="static-text">
+                        Immerse yourself in a rich multimedia experience with smartium's advanced streaming and zoning capabilities. Enjoy seamless integration with your favorite content services and home security systems, including CCTV and intercoms. By leveraging the most advanced technologies available, smartium continuously evolves to meet the growing demands of modern smart homes, ensuring your living space remains at the forefront of intelligent, secure, and personalized living.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <p>&copy; 2024 smartium. all rights reserved.</p>
+    </footer>
+
+    <script>
+        const words = ["innovation", "automation", "efficiency", "comfort", "intelligence"];
+        let index = 0;
+        const changingText = document.getElementById('changing-text');
+
+        function changeWord() {
+            changingText.style.opacity = '0';
+            setTimeout(() => {
+                index = (index + 1) % words.length;
+                changingText.textContent = words[index];
+                changingText.style.opacity = '1';
+            }, 300);
+        }
+
+        setInterval(changeWord, 3000);
+    </script>
+
+</body>
+</html>
