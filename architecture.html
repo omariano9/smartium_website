@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Central Management System Documentation</title>
+    <title>Smartium Central Management System Documentation</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
     <style>
         :root {
@@ -13,6 +13,7 @@
             --bg-color: #fff;
             --sidebar-bg: #f8f9fa;
             --border-color: #e0e0e0;
+            --accent-color: #34a853;
         }
 
         * {
@@ -43,58 +44,29 @@
             margin-left: 300px;
             padding: 2rem;
             width: calc(100% - 300px);
+            max-width: 1200px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+        h1, h2, h3, h4 {
             color: var(--primary-color);
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin: 2rem 0 1rem;
-            color: var(--secondary-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
             margin: 1.5rem 0 1rem;
-            color: var(--primary-color);
         }
 
-        p {
-            margin-bottom: 1rem;
-        }
-
-        ul, ol {
+        .flow-section {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
             margin: 1rem 0;
-            padding-left: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .service-diagram {
-            margin: 2rem 0;
-            padding: 1rem;
-            background: #f5f5f5;
-            border-radius: 4px;
-        }
-
-        code {
-            background: #f5f5f5;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.9em;
-        }
-
-        pre {
-            background: #f5f5f5;
-            padding: 1rem;
-            border-radius: 4px;
-            overflow-x: auto;
-            margin: 1rem 0;
+        .diagram-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
         }
 
         .nav-link {
@@ -108,25 +80,25 @@
             color: var(--primary-color);
         }
 
-        .subsection {
-            margin-left: 1rem;
-        }
-
-        .service-card {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 1.5rem;
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
             margin: 1rem 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .diagram-container {
-            background: white;
+        .info-card {
+            background: #f8f9fa;
             padding: 1rem;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .flow-diagram {
             margin: 1rem 0;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -135,268 +107,1245 @@
         <h2>Contents</h2>
         <a href="#overview" class="nav-link">1. System Overview</a>
         <a href="#architecture" class="nav-link">2. System Architecture</a>
-        <a href="#services" class="nav-link">3. Services</a>
+        <a href="#microservices" class="nav-link">3. CMS Microservices</a>
         <div class="subsection">
-            <a href="#activation" class="nav-link">3.1 Activation Management</a>
-            <a href="#certificate" class="nav-link">3.2 Certificate Management</a>
-            <a href="#device" class="nav-link">3.3 Device Management</a>
-            <a href="#integrator" class="nav-link">3.4 Integrator Management</a>
-            <a href="#music" class="nav-link">3.5 Music Management</a>
-            <a href="#oauth" class="nav-link">3.6 OAuth Management</a>
-            <a href="#streaming" class="nav-link">3.7 Streaming Management</a>
+            <a href="#device-management" class="nav-link">3.1 Device Management Service</a>
+            <a href="#activation-management" class="nav-link">3.2 Activation Management Service</a>
+            <a href="#certificate-management" class="nav-link">3.3 Certificate Management Service</a>
+            <a href="#integrator-management" class="nav-link">3.4 Integrator Management Service</a>
+            <a href="#music-management" class="nav-link">3.5 Music Management Service</a>
+            <a href="#oauth-management" class="nav-link">3.6 OAuth Management Service</a>
+            <a href="#streaming-management" class="nav-link">3.7 Streaming Management Service</a>
         </div>
-        <a href="#communication" class="nav-link">4. Service Communication</a>
-        <a href="#security" class="nav-link">5. Security Considerations</a>
-        <a href="#deployment" class="nav-link">6. Deployment</a>
+        <a href="#server-arch" class="nav-link">4. Smartium Server Architecture</a>
+        <a href="#communication" class="nav-link">5. Communication Patterns</a>
+        <a href="#security" class="nav-link">6. Security Architecture</a>
+        <a href="#deployment" class="nav-link">7. Deployment Architecture</a>
     </nav>
 
     <main id="content">
-        <h1>Central Management System Documentation</h1>
+        <h1>Smartium Central Management System Documentation</h1>
         
         <section id="overview">
             <h2>1. System Overview</h2>
-            <p>The Central Management System (CMS) is a comprehensive microservices-based platform designed to manage IoT devices, system integrators, and various streaming services. The system provides robust device management, security, authentication, and streaming capabilities through a set of interconnected microservices.</p>
+            <p>The Smartium Central Management System (CMS) provides comprehensive management and control over deployed Smartium Home Automation Servers. These servers are sophisticated edge devices that manage home automation protocols (KNX/Matter), handle streaming services, and provide user interfaces for home control.</p>
             
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Core Capabilities</h4>
+                    <ul>
+                        <li>Server lifecycle management</li>
+                        <li>Secure communication channels</li>
+                        <li>Centralized monitoring</li>
+                        <li>Update distribution</li>
+                        <li>Certificate management</li>
+                        <li>Integration management</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Key Technologies</h4>
+                    <ul>
+                        <li>Rust for service implementation</li>
+                        <li>gRPC for service communication</li>
+                        <li>WebTransport for streaming</li>
+                        <li>SurrealDB for data storage</li>
+                        <li>Kubernetes for orchestration</li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="diagram-container">
                 <div class="mermaid">
                     graph TB
-                    CMS[Central Management System]
-                    AMS[Activation Management]
-                    CES[Certificate Management]
-                    DMS[Device Management]
-                    IMS[Integrator Management]
-                    MMS[Music Management]
-                    OMS[OAuth Management]
-                    SMS[Streaming Management]
+                    subgraph CMS[Smartium Central Management System]
+                        direction TB
+                        subgraph CoreServices[Core Services]
+                            DMS[Device Management Service]
+                            AMS[Activation Service]
+                            CES[Certificate Service]
+                        end
+                        
+                        subgraph IntegrationServices[Integration Services]
+                            IMS[Integrator Management]
+                            MMS[Music Service]
+                            OMS[OAuth Service]
+                            SMS[Streaming Service]
+                        end
+                        
+                        subgraph Infrastructure[Infrastructure]
+                            DB[(SurrealDB)]
+                            Cache[(Redis)]
+                            Metrics[Metrics Collection]
+                        end
+                    end
                     
-                    CMS --> AMS
-                    CMS --> CES
-                    CMS --> DMS
-                    CMS --> IMS
-                    CMS --> MMS
-                    CMS --> OMS
-                    CMS --> SMS
+                    subgraph Servers[Smartium Servers]
+                        Server1[Server Instance 1]
+                        Server2[Server Instance 2]
+                        Server3[Server Instance 3]
+                    end
+                    
+                    CoreServices --> Infrastructure
+                    IntegrationServices --> Infrastructure
+                    DMS --> Servers
+                    
+                    subgraph Clients[Client Applications]
+                        Mobile[Mobile Apps]
+                        Web[Web Interface]
+                    end
+                    
+                    Servers --> Clients
                 </div>
             </div>
         </section>
 
         <section id="architecture">
             <h2>2. System Architecture</h2>
-            <p>The system follows a microservices architecture pattern with the following key characteristics:</p>
-            <ul>
-                <li>gRPC-based communication between services</li>
-                <li>SurrealDB as the primary database</li>
-                <li>JWT-based authentication</li>
-                <li>Mutual TLS (mTLS) for secure communication</li>
-            </ul>
-
-            <div class="diagram-container">
+            
+            <div class="flow-section">
+                <h3>Service Interaction Patterns</h3>
                 <div class="mermaid">
                     flowchart TB
-                    subgraph External
-                        Client[Client Applications]
-                        Devices[IoT Devices]
-                    end
+                        subgraph External[External Layer]
+                            Servers[Smartium Servers]
+                            Int[Integrators]
+                        end
+                        
+                        subgraph API[API Layer]
+                            Gateway[API Gateway]
+                            Auth[Authentication]
+                        end
+                        
+                        subgraph Core[Core Services Layer]
+                            DM[Device Management]
+                            AM[Activation Management]
+                            CM[Certificate Management]
+                        end
+                        
+                        subgraph Integration[Integration Layer]
+                            IM[Integrator Management]
+                            MM[Music Management]
+                            OM[OAuth Management]
+                            SM[Streaming Management]
+                        end
+                        
+                        subgraph Data[Data Layer]
+                            DB[(SurrealDB)]
+                            Cache[(Redis)]
+                            Metrics[(Metrics)]
+                        end
+                        
+                        External --> API
+                        API --> Core
+                        API --> Integration
+                        Core --> Data
+                        Integration --> Data
+                </div>
+            </div>
 
-                    subgraph CMS[Central Management System]
-                        IMS[Integrator Management]
-                        DMS[Device Management]
-                        CES[Certificate Management]
-                        AMS[Activation Management]
-                        MMS[Music Management]
-                        OMS[OAuth Management]
-                        SMS[Streaming Management]
-                    end
-
-                    Client --> IMS
-                    Devices --> DMS
-                    DMS <--> CES
-                    DMS <--> AMS
-                    IMS <--> AMS
-                    DMS <--> IMS
-                    Devices <--> SMS
-                    Devices <--> MMS
-                    MMS <--> OMS
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Service Layer Responsibilities</h4>
+                    <ul>
+                        <li>API Layer: Request routing, authentication, rate limiting</li>
+                        <li>Core Services: Critical system functionality</li>
+                        <li>Integration Services: External service connectivity</li>
+                        <li>Data Layer: Persistent storage, caching, metrics</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Communication Patterns</h4>
+                    <ul>
+                        <li>gRPC for service-to-service communication</li>
+                        <li>WebTransport for streaming data</li>
+                        <li>Event-driven updates using Redis pub/sub</li>
+                        <li>Persistent connections for server monitoring</li>
+                    </ul>
                 </div>
             </div>
         </section>
+	<section id="device-management">
+        <h2>3.1 Device Management Service (DMS)</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Primary Responsibilities</h4>
+                <ul>
+                    <li>Smartium server lifecycle management</li>
+                    <li>Health monitoring and diagnostics</li>
+                    <li>Configuration management</li>
+                    <li>Update orchestration</li>
+                    <li>Status tracking and history</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Real-time health monitoring</li>
+                    <li>Automatic recovery procedures</li>
+                    <li>Rolling updates management</li>
+                    <li>Configuration versioning</li>
+                    <li>Diagnostic data collection</li>
+                </ul>
+            </div>
+        </div>
 
-        <section id="services">
-            <h2>3. Services</h2>
+        <div class="flow-section">
+            <h3>Server Lifecycle Management</h3>
+            <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> New: Factory Reset
+                    New --> Pending: Initial Connection
+                    Pending --> Activating: Verify Activation
+                    Activating --> Active: Setup Complete
+                    Active --> Updating: Update Available
+                    Updating --> Active: Update Complete
+                    Active --> Maintenance: Issue Detected
+                    Maintenance --> Active: Issue Resolved
+                    Active --> Deactivated: Manual Deactivation
+                    Deactivated --> Pending: Reactivation
+                    Deactivated --> [*]: Decommission
+            </div>
+        </div>
 
-            <section id="activation" class="service-card">
-                <h3>3.1 Activation Management Service</h3>
-                <p>Manages the activation lifecycle for both integrators and devices, handling token generation, verification, and completion of activation processes.</p>
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        sequenceDiagram
-                            participant C as Client
-                            participant A as Activation Service
-                            participant I as Integrator Service
-                            participant D as Device Service
-                            
-                            C->>A: Generate Activation
-                            A->>A: Create Activation Code
-                            A-->>C: Return Activation Code
-                            C->>A: Verify Activation
-                            A->>A: Validate Code
-                            A-->>C: Confirm Validity
-                            C->>A: Complete Activation
-                            A->>I: Update Integrator Status
-                            A->>D: Update Device Status
-                    </div>
-                </div>
-            </section>
+        <div class="flow-section">
+            <h3>Update Management Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant DMS as Device Management
+                    participant UPS as Update Service
+                    participant CES as Certificate Service
+                    
+                    DMS->>S: Check Current Version
+                    S-->>DMS: Version Info + Health Status
+                    DMS->>UPS: Check Available Updates
+                    UPS-->>DMS: Update Package Info
+                    
+                    alt Update Available
+                        DMS->>S: Initiate Update
+                        S->>S: Backup Configuration
+                        S->>S: Download Update
+                        S->>S: Verify Package
+                        S->>S: Apply Update
+                        S->>CES: Request Certificate Renewal
+                        CES-->>S: New Certificate
+                        S-->>DMS: Update Complete
+                    else No Update Required
+                        DMS->>S: Confirm Current Version
+                    end
+                    
+                    loop Health Check
+                        DMS->>S: Monitor Status
+                        S-->>DMS: Health Metrics
+                    end
+            </div>
+        </div>
 
-            <section id="certificate" class="service-card">
-                <h3>3.2 Certificate Management Service</h3>
-                <p>Handles PKI operations including CA management and device certificate lifecycle management for mutual TLS authentication.</p>
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        sequenceDiagram
-                            participant D as Device
-                            participant C as Certificate Service
-                            participant CA as CA Storage
-                            
-                            D->>C: Request Certificate
-                            C->>CA: Check CA Status
-                            CA-->>C: Return CA Info
-                            C->>C: Generate Device Certificate
-                            C-->>D: Return Certificate Bundle
-                    </div>
-                </div>
-            </section>
+        <div class="flow-section">
+            <h3>Health Monitoring</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant DMS as Device Management
+                    participant M as Metrics Service
+                    participant A as Alert Service
+                    
+                    loop Every Minute
+                        S->>DMS: Basic Health Metrics
+                        DMS->>M: Store Metrics
+                    end
+                    
+                    loop Every 5 Minutes
+                        S->>DMS: Detailed System Stats
+                        DMS->>M: Store Detailed Metrics
+                    end
+                    
+                    opt Threshold Exceeded
+                        M->>A: Generate Alert
+                        A->>DMS: Alert Notification
+                        DMS->>S: Request Diagnostics
+                        S-->>DMS: Diagnostic Data
+                        DMS->>S: Execute Recovery Action
+                    end
+            </div>
+        </div>
+    </section>
 
-            <section id="device" class="service-card">
-                <h3>3.3 Device Management Service</h3>
-                <p>Manages device lifecycle, health monitoring, and status tracking within the system.</p>
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        stateDiagram-v2
-                            [*] --> Pending
-                            Pending --> Active: Activation
-                            Active --> Inactive: Deactivation
-                            Inactive --> Active: Reactivation
-                            Active --> Maintenance
-                            Maintenance --> Active
-                            Active --> Decommissioned
-                            Inactive --> Decommissioned
-                    </div>
-                </div>
-            </section>
+    <section id="activation-management">
+        <h2>3.2 Activation Management Service (AMS)</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Core Functions</h4>
+                <ul>
+                    <li>Generate activation tokens</li>
+                    <li>Validate activation attempts</li>
+                    <li>Track activation status</li>
+                    <li>Manage activation lifecycle</li>
+                    <li>Handle activation revocation</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Security Features</h4>
+                <ul>
+                    <li>Cryptographic token generation</li>
+                    <li>Time-limited activation windows</li>
+                    <li>Geographic activation restrictions</li>
+                    <li>Activation attempt monitoring</li>
+                    <li>Fraud detection systems</li>
+                </ul>
+            </div>
+        </div>
 
-            <section id="integrator" class="service-card">
-                <h3>3.4 Integrator Management Service</h3>
-                <p>Handles system integrator account management, team management, and workspace organization.</p>
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        graph TB
-                            I[Integrator] --> T[Team Management]
-                            I --> W[Workspace Management]
-                            I --> D[Device Assignment]
-                            T --> R[Role Management]
-                            W --> DA[Device Access]
-                            W --> TM[Team Member Access]
-                    </div>
-                </div>
-            </section>
+        <div class="flow-section">
+            <h3>Server Activation Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant DMS as Device Management
+                    participant AMS as Activation Service
+                    participant CES as Certificate Service
+                    participant IMS as Integrator Service
+                    
+                    S->>DMS: Initial Connection (Activation Code)
+                    DMS->>AMS: Validate Activation Code
+                    AMS->>IMS: Verify Integrator Status
+                    IMS-->>AMS: Integrator Validated
+                    
+                    alt Valid Activation
+                        AMS-->>DMS: Activation Confirmed
+                        DMS->>CES: Request Initial Certificate
+                        CES-->>DMS: Certificate Bundle
+                        DMS->>S: Send Certificate + Initial Config
+                        S->>S: Apply Configuration
+                        S->>S: Start Services
+                        S-->>DMS: Activation Complete
+                        DMS->>AMS: Record Activation
+                    else Invalid Activation
+                        AMS-->>DMS: Activation Denied
+                        DMS-->>S: Activation Failed
+                    end
+            </div>
+        </div>
 
-            <section id="music" class="service-card">
-                <h3>3.5 Music Management Service</h3>
-                <p>Provides unified authentication and provider management for multiple music streaming services.</p>
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        graph LR
-                            M[Music Service] --> S[Spotify]
-                            M --> T[Tidal]
-                            M --> D[Deezer]
-                            M --> Y[YouTube Music]
-                    </div>
-                </div>
-            </section>
+        <div class="flow-section">
+            <h3>Activation Status Management</h3>
+            <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> Generated: Create Activation Code
+                    Generated --> Pending: Code Distributed
+                    Pending --> Validating: Initial Connection
+                    Validating --> Active: Validation Success
+                    Validating --> Failed: Validation Failed
+                    Active --> Revoked: Manual Revocation
+                    Failed --> [*]
+                    Revoked --> [*]
+                    
+                    note right of Generated
+                        Activation code created
+                        Time window starts
+                    end note
+                    
+                    note right of Validating
+                        Check integrator status
+                        Verify hardware ID
+                        Validate location
+                    end note
+            </div>
+        </div>
+    </section>
+ <section id="certificate-management">
+        <h2>3.3 Certificate Management Service (CMS)</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Core Functions</h4>
+                <ul>
+                    <li>Certificate Authority (CA) management</li>
+                    <li>Server certificate lifecycle management</li>
+                    <li>Certificate rotation and renewal</li>
+                    <li>Certificate revocation</li>
+                    <li>PKI infrastructure maintenance</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Security Features</h4>
+                <ul>
+                    <li>Automated certificate rotation</li>
+                    <li>Strong key generation</li>
+                    <li>Certificate revocation lists (CRL)</li>
+                    <li>OCSP responder service</li>
+                    <li>Key ceremony management</li>
+                </ul>
+            </div>
+        </div>
 
-            <section id="oauth" class="service-card">
-                <h3>3.6 OAuth Management Service</h3>
-                <p>Manages OAuth 2.0 authentication flows for multiple providers.</p>
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        sequenceDiagram
-                            participant C as Client
-                            participant O as OAuth Service
-                            participant P as Provider
-                            
-                            C->>O: Request Auth URL
-                            O->>P: Get Authorization URL
-                            P-->>O: Return URL
-                            O-->>C: Return URL
-                            C->>O: Complete Auth
-                            O->>P: Exchange Code
-                            P-->>O: Return Tokens
-                            O-->>C: Return Tokens
-                    </div>
-                </div>
-            </section>
+        <div class="flow-section">
+            <h3>Certificate Lifecycle Flow</h3>
+            <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> Requested: Initial Request
+                    Requested --> Generating: Validation Passed
+                    Generating --> Active: Certificate Issued
+                    Active --> Renewing: Approaching Expiry
+                    Renewing --> Active: New Certificate
+                    Active --> Revoked: Security Issue
+                    Revoked --> [*]
+                    Active --> Expired: Timeout
+                    Expired --> [*]
+            </div>
+        </div>
 
-            <section id="streaming" class="service-card">
-                <h3>3.7 Streaming Management Service</h3>
-                <p>Handles real-time video/audio streaming sessions for CCTV and intercom systems.</p>
-                <div class="diagram-container">
-                    <div class="mermaid">
-                        graph TB
-                            S[Streaming Service]
-                            S --> SM[Session Management]
-                            S --> VM[Viewer Management]
-                            S --> QM[Quality Management]
-                            SM --> B[Buffer Management]
-                            VM --> C[Connection Registry]
-                            QM --> A[Adaptive Streaming]
-                    </div>
-                </div>
-            </section>
-        </section>
+        <div class="flow-section">
+            <h3>Certificate Renewal Process</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant DMS as Device Management
+                    participant CES as Certificate Service
+                    
+                    alt Automatic Renewal
+                        CES->>CES: Check Expiring Certs
+                        CES->>DMS: Notify of Pending Renewal
+                        DMS->>S: Initiate Renewal
+                    else Manual Renewal
+                        S->>DMS: Request Renewal
+                        DMS->>CES: Forward Request
+                    end
+                    
+                    CES->>CES: Generate New Certificate
+                    CES-->>DMS: New Certificate Bundle
+                    DMS->>S: Deploy New Certificate
+                    S->>S: Validate Certificate
+                    S->>S: Update Configuration
+                    S-->>DMS: Confirm Update
+                    DMS->>CES: Record Renewal
+            </div>
+        </div>
 
-        <section id="communication">
-            <h2>4. Service Communication</h2>
-            <p>All services communicate using gRPC with Protocol Buffers. The communication patterns include:</p>
-            <ul>
-                <li>Request/Response patterns for synchronous operations</li>
-                <li>Server streaming for real-time updates</li>
-                <li>Client streaming for batch operations</li>
-                <li>Bidirectional streaming for real-time communication</li>
-            </ul>
-        </section>
+        <div class="flow-section">
+            <h3>CA Management Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant CES as Certificate Service
+                    participant DMS as Device Management
+                    participant S as Smartium Server
+                    
+                    alt CA Rotation
+                        CES->>CES: Generate New CA
+                        CES->>DMS: Notify CA Change
+                        par Notify All Servers
+                            DMS->>S: Push New CA Cert
+                        end
+                    else CA Renewal
+                        CES->>CES: Extend CA Certificate
+                        CES->>DMS: Update CA Status
+                    end
+            </div>
+        </div>
+    </section>
 
-        <section id="security">
-            <h2>5. Security Considerations</h2>
-            <ul>
-                <li>All service-to-service communication is secured using mutual TLS</li>
-                <li>JWT-based authentication for client applications</li>
-                <li>Role-based access control (RBAC) for authorization</li>
-                <li>Secure token management and storage</li>
-                <li>Regular certificate rotation and renewal</li>
-                <li>Encrypted configuration management</li>
-            </ul>
-        </section>
+    <section id="integrator-management">
+        <h2>3.4 Integrator Management Service (IMS)</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Core Functions</h4>
+                <ul>
+                    <li>Integrator account management</li>
+                    <li>Team member management</li>
+                    <li>Workspace organization</li>
+                    <li>Role-based access control</li>
+                    <li>Server assignment and tracking</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Management Features</h4>
+                <ul>
+                    <li>Multi-tenant isolation</li>
+                    <li>Hierarchical permissions</li>
+                    <li>Activity auditing</li>
+                    <li>Resource quota management</li>
+                    <li>Integration analytics</li>
+                </ul>
+            </div>
+        </div>
 
-        <section id="deployment">
-            <h2>6. Deployment</h2>
-            <p>System requirements for deployment:</p>
-            <ul>
-                <li>Rust 1.70 or higher</li>
-                <li>SurrealDB instance</li>
-                <li>TLS certificates for secure communication</li>
-                <li>Configuration management system</li>
-                <li>Monitoring and logging infrastructure</li>
-            </ul>
-        </section>
-    </main>
+        <div class="flow-section">
+            <h3>Integrator Hierarchy</h3>
+            <div class="mermaid">
+                graph TD
+                    I[Integrator Account] --> W1[Workspace 1]
+                    I --> W2[Workspace 2]
+                    
+                    W1 --> T1[Team 1]
+                    W1 --> T2[Team 2]
+                    
+                    T1 --> M1[Member: Admin]
+                    T1 --> M2[Member: Operator]
+                    
+                    W1 --> D1[Server Group 1]
+                    W2 --> D2[Server Group 2]
+                    
+                    D1 --> S1[Smartium Server 1]
+                    D1 --> S2[Smartium Server 2]
+                    D2 --> S3[Smartium Server 3]
+            </div>
+        </div>
 
-    <script>
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: 'default',
-            securityLevel: 'loose',
-        });
-    </script>
+        <div class="flow-section">
+            <h3>Server Assignment Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant I as Integrator
+                    participant IMS as Integrator Management
+                    participant DMS as Device Management
+                    participant AMS as Activation Service
+                    
+                    I->>IMS: Request Server Assignment
+                    IMS->>AMS: Generate Activation Code
+                    AMS-->>IMS: Activation Code
+                    IMS->>DMS: Pre-register Server
+                    DMS-->>IMS: Registration Confirmed
+                    IMS-->>I: Provide Activation Code
+                    
+                    note over I,IMS: Server Activation Process
+                    
+                    DMS->>IMS: Server Activated
+                    IMS->>IMS: Update Assignment Records
+                    IMS-->>I: Confirm Assignment
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Workspace Management Flow</h3>
+            <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> Created: Create Workspace
+                    Created --> Configuring: Set Permissions
+                    Configuring --> Active: Configuration Complete
+                    Active --> Modified: Update Settings
+                    Modified --> Active: Changes Applied
+                    Active --> Archived: Archive Workspace
+                    Archived --> [*]
+            </div>
+        </div>
+    </section>
+<section id="music-management">
+        <h2>3.5 Music Management Service (MMS)</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Core Functions</h4>
+                <ul>
+                    <li>Music provider integration management</li>
+                    <li>Provider authentication handling</li>
+                    <li>Token lifecycle management</li>
+                    <li>Provider status monitoring</li>
+                    <li>Cross-provider synchronization</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Supported Providers</h4>
+                <ul>
+                    <li>Spotify</li>
+                    <li>Tidal</li>
+                    <li>Deezer</li>
+                    <li>YouTube Music</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Provider Integration Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant MMS as Music Management
+                    participant OMS as OAuth Service
+                    participant P as Provider
+                    
+                    S->>MMS: Request Provider Integration
+                    MMS->>OMS: Initialize OAuth Flow
+                    OMS-->>MMS: Authorization URL
+                    MMS-->>S: Redirect to Auth
+                    
+                    Note over S,P: User Authentication
+                    
+                    P-->>OMS: Auth Code
+                    OMS->>MMS: Provider Tokens
+                    MMS->>MMS: Store Provider State
+                    MMS-->>S: Integration Complete
+                    
+                    loop Token Refresh
+                        MMS->>OMS: Check Token Status
+                        OMS->>P: Refresh If Needed
+                        P-->>OMS: New Tokens
+                        OMS-->>MMS: Updated Tokens
+                    end
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Provider State Management</h3>
+            <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> Initializing: Start Integration
+                    Initializing --> Authenticating: Redirect to Provider
+                    Authenticating --> Connected: Authentication Success
+                    Connected --> Refreshing: Token Expiring
+                    Refreshing --> Connected: Token Refreshed
+                    Connected --> Disconnected: Authentication Failed
+                    Disconnected --> Authenticating: Retry Authentication
+                    Disconnected --> [*]: Remove Integration
+            </div>
+        </div>
+    </section>
+
+    <section id="oauth-management">
+        <h2>3.6 OAuth Management Service (OMS)</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Core Functions</h4>
+                <ul>
+                    <li>OAuth flow management</li>
+                    <li>Token lifecycle handling</li>
+                    <li>Provider-specific adaptations</li>
+                    <li>State validation</li>
+                    <li>Security enforcement</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Security Features</h4>
+                <ul>
+                    <li>PKCE support</li>
+                    <li>State parameter validation</li>
+                    <li>Token encryption</li>
+                    <li>Scope validation</li>
+                    <li>Rate limiting</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>OAuth Authorization Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant OMS as OAuth Service
+                    participant P as Provider
+                    participant C as Cache
+                    
+                    S->>OMS: Initialize OAuth Flow
+                    OMS->>OMS: Generate State & PKCE
+                    OMS->>C: Store State
+                    OMS-->>S: Authorization URL
+                    
+                    Note over S,P: User Authorization
+                    
+                    P-->>OMS: Callback with Code
+                    OMS->>C: Validate State
+                    OMS->>P: Exchange Code
+                    P-->>OMS: Access & Refresh Tokens
+                    OMS->>OMS: Encrypt Tokens
+                    OMS-->>S: Authorization Complete
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Token Refresh Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant OMS as OAuth Service
+                    participant P as Provider
+                    
+                    alt Automatic Refresh
+                        OMS->>OMS: Check Token Expiry
+                        OMS->>P: Refresh Token
+                    else Manual Refresh
+                        S->>OMS: Request Token Refresh
+                        OMS->>P: Refresh Token
+                    end
+                    
+                    P-->>OMS: New Access Token
+                    OMS->>OMS: Update Token State
+                    OMS-->>S: Updated Token
+            </div>
+        </div>
+    </section>
+
+    <section id="streaming-management">
+        <h2>3.7 Streaming Management Service (SMS)</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Core Functions</h4>
+                <ul>
+                    <li>Stream session management</li>
+                    <li>Quality adaptation</li>
+                    <li>Connection management</li>
+                    <li>Stream monitoring</li>
+                    <li>Performance optimization</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Streaming Features</h4>
+                <ul>
+                    <li>WebTransport streaming</li>
+                    <li>Adaptive bitrate</li>
+                    <li>Multi-viewer support</li>
+                    <li>Stream recording</li>
+                    <li>Quality metrics</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Streaming Session Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant C as Client
+                    participant S as Smartium Server
+                    participant SMS as Streaming Service
+                    participant M as Metrics
+                    
+                    C->>S: Request Stream
+                    S->>SMS: Initialize Stream Session
+                    SMS->>SMS: Allocate Resources
+                    SMS-->>S: Stream Configuration
+                    S-->>C: WebTransport Connection Info
+                    
+                    par Stream Management
+                        loop Quality Monitoring
+                            SMS->>C: Monitor Quality
+                            C-->>SMS: Quality Metrics
+                            SMS->>SMS: Adapt Quality
+                        end
+                    and Metrics Collection
+                        loop Performance Tracking
+                            SMS->>M: Stream Metrics
+                            M->>M: Process Metrics
+                        end
+                    end
+                    
+                    C->>S: End Stream
+                    S->>SMS: Terminate Session
+                    SMS->>M: Final Metrics
+                    SMS->>SMS: Cleanup Resources
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Quality Adaptation Flow</h3>
+            <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> Initializing: Start Stream
+                    Initializing --> Standard: Initial Quality
+                    
+                    Standard --> HighQuality: Good Connection
+                    Standard --> LowQuality: Poor Connection
+                    
+                    HighQuality --> Standard: Degraded Performance
+                    LowQuality --> Standard: Improved Performance
+                    
+                    state if_error <<choice>>
+                    Standard --> if_error: Connection Issues
+                    if_error --> Recovering: Recoverable
+                    if_error --> Failed: Unrecoverable
+                    
+                    Recovering --> Standard: Issue Resolved
+                    Failed --> [*]
+            </div>
+        </div>
+    </section>
+ <section id="server-arch">
+        <h2>4. Smartium Server Architecture</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Internal Services</h4>
+                <ul>
+                    <li>User Management Service</li>
+                    <li>KNX Integration Service</li>
+                    <li>Matter Integration Service</li>
+                    <li>Local Streaming Service</li>
+                    <li>Authorization Service</li>
+                    <li>State Management Service</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Core Features</h4>
+                <ul>
+                    <li>Local device control</li>
+                    <li>Real-time state updates</li>
+                    <li>Mobile client connectivity</li>
+                    <li>Local authentication</li>
+                    <li>Offline operation capability</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Server Internal Architecture</h3>
+            <div class="mermaid">
+                graph TB
+                    subgraph ServerCore[Smartium Server Core]
+                        API[API Gateway]
+                        Auth[Authorization Service]
+                        State[State Management]
+                        
+                        subgraph UserServices[User Services]
+                            UM[User Management]
+                            PM[Profile Management]
+                            PS[Permission Service]
+                        end
+                        
+                        subgraph AutomationServices[Automation Services]
+                            KNX[KNX Service]
+                            Matter[Matter Service]
+                            Rules[Rules Engine]
+                            Scenes[Scene Management]
+                        end
+                        
+                        subgraph StreamingServices[Streaming Services]
+                            Stream[Streaming Service]
+                            CCTV[CCTV Management]
+                            Intercom[Intercom Service]
+                        end
+                        
+                        subgraph DataServices[Data Services]
+                            Cache[Local Cache]
+                            DB[Local Database]
+                            Sync[Sync Service]
+                        end
+                    end
+                    
+                    Client[Mobile Client] --> API
+                    CMS[Central Management] --> API
+                    
+                    API --> Auth
+                    Auth --> UserServices
+                    Auth --> AutomationServices
+                    Auth --> StreamingServices
+                    
+                    State --> DataServices
+                    UserServices --> DataServices
+                    AutomationServices --> DataServices
+                    StreamingServices --> DataServices
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>User Request Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant C as Mobile Client
+                    participant A as API Gateway
+                    participant Au as Auth Service
+                    participant S as Service Layer
+                    participant D as Data Layer
+                    
+                    C->>A: API Request
+                    A->>Au: Authenticate Request
+                    Au->>D: Validate Session
+                    D-->>Au: Session Valid
+                    Au-->>A: Authentication OK
+                    A->>S: Forward Request
+                    S->>D: Data Operation
+                    D-->>S: Operation Result
+                    S-->>A: Response
+                    A-->>C: API Response
+                    
+                    par State Update
+                        S->>State: Update State
+                        State->>C: Push Update
+                    end
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Automation Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant D as Device (KNX/Matter)
+                    participant P as Protocol Service
+                    participant R as Rules Engine
+                    participant S as Scene Manager
+                    participant St as State Manager
+                    participant C as Mobile Client
+                    
+                    D->>P: State Change
+                    P->>St: Update State
+                    St->>R: Evaluate Rules
+                    
+                    alt Rule Triggered
+                        R->>P: Execute Action
+                        P->>D: Device Command
+                    else Scene Triggered
+                        R->>S: Activate Scene
+                        S->>P: Multiple Commands
+                        P->>D: Device Commands
+                    end
+                    
+                    St->>C: Push State Update
+            </div>
+        </div>
+    </section>
+
+    <section id="communication">
+        <h2>5. Communication Patterns</h2>
+        
+        <div class="flow-section">
+            <h3>Server-CMS Communication</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant DMS as Device Management
+                    participant CES as Certificate Service
+                    participant M as Metrics Service
+                    
+                    rect rgb(200, 220, 250)
+                        note right of S: Secure Channel Setup
+                        S->>CES: Present Certificate
+                        CES-->>S: Validate Certificate
+                        S->>DMS: Establish Connection
+                    end
+                    
+                    rect rgb(220, 250, 220)
+                        note right of S: Regular Operations
+                        loop Every Minute
+                            S->>DMS: Health Check
+                            S->>M: Report Metrics
+                        end
+                    end
+                    
+                    rect rgb(250, 220, 220)
+                        note right of S: Event-Based Communication
+                        S->>DMS: Configuration Change
+                        DMS->>S: Update Available
+                        S->>DMS: Error Report
+                    end
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Mobile Client Communication</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant C as Mobile Client
+                    participant S as Smartium Server
+                    participant WS as WebSocket Service
+                    participant ST as Streaming Service
+                    
+                    C->>S: Authentication
+                    S-->>C: Session Token
+                    
+                    par Real-time Updates
+                        C->>WS: Subscribe to Updates
+                        loop State Changes
+                            WS->>C: Push Updates
+                        end
+                    and Device Control
+                        C->>S: Control Command
+                        S->>S: Process Command
+                        S-->>C: Command Result
+                    and Streaming
+                        C->>ST: Request Stream
+                        ST-->>C: Stream Configuration
+                        Note over C,ST: WebTransport Streaming
+                    end
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Protocol Integration</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant KD as KNX Devices
+                    participant KS as KNX Service
+                    participant MD as Matter Devices
+                    participant MS as Matter Service
+                    participant SM as State Manager
+                    participant C as Mobile Client
+                    
+                    par KNX Integration
+                        KD->>KS: Device State
+                        KS->>SM: Update State
+                        SM->>C: Push Update
+                        C->>KS: Control Command
+                        KS->>KD: Execute Command
+                    and Matter Integration
+                        MD->>MS: Device State
+                        MS->>SM: Update State
+                        SM->>C: Push Update
+                        C->>MS: Control Command
+                        MS->>MD: Execute Command
+                    end
+            </div>
+        </div>
+    </section>
+
+<section id="security">
+        <h2>6. Security Architecture</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Security Layers</h4>
+                <ul>
+                    <li>Network Security</li>
+                    <li>Transport Security</li>
+                    <li>Application Security</li>
+                    <li>Data Security</li>
+                    <li>Infrastructure Security</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Key Security Features</h4>
+                <ul>
+                    <li>mTLS Communication</li>
+                    <li>Token-based Authentication</li>
+                    <li>Role-based Access Control</li>
+                    <li>End-to-end Encryption</li>
+                    <li>Audit Logging</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Authentication Architecture</h3>
+            <div class="mermaid">
+                flowchart TB
+                    subgraph AuthLayers[Authentication Layers]
+                        direction TB
+                        
+                        subgraph ServerAuth[Server Authentication]
+                            CA[Certificate Authority]
+                            mTLS[Mutual TLS]
+                            TokenAuth[Token Authentication]
+                        end
+                        
+                        subgraph UserAuth[User Authentication]
+                            Local[Local Authentication]
+                            OAuth[OAuth Integration]
+                            Session[Session Management]
+                        end
+                        
+                        subgraph APIAuth[API Security]
+                            APIKeys[API Keys]
+                            JWTs[JWT Tokens]
+                            RateLimit[Rate Limiting]
+                        end
+                    end
+                    
+                    CA --> mTLS
+                    mTLS --> TokenAuth
+                    TokenAuth --> APIAuth
+                    Local --> Session
+                    OAuth --> Session
+                    Session --> APIAuth
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Server-CMS Security Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant S as Smartium Server
+                    participant DMS as Device Management
+                    participant CES as Certificate Service
+                    participant AMS as Activation Service
+                    
+                    rect rgb(200, 220, 250)
+                        Note over S,AMS: Initial Security Setup
+                        S->>DMS: Present Activation Token
+                        DMS->>AMS: Validate Token
+                        AMS-->>DMS: Token Valid
+                        DMS->>CES: Request Certificate
+                        CES-->>S: Issue Certificate Bundle
+                    end
+                    
+                    rect rgb(220, 250, 220)
+                        Note over S,AMS: Secure Communication
+                        S->>DMS: Establish mTLS Connection
+                        DMS->>S: Issue Session Token
+                        loop Secure Operations
+                            S->>DMS: Authenticated Request
+                            DMS-->>S: Secure Response
+                        end
+                    end
+                    
+                    rect rgb(250, 220, 220)
+                        Note over S,AMS: Security Maintenance
+                        CES->>S: Certificate Rotation Notice
+                        S->>CES: Certificate Renewal Request
+                        CES-->>S: New Certificate Bundle
+                    end
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Authorization Flow</h3>
+            <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> TokenValidation: Present Token
+                    TokenValidation --> RoleCheck: Token Valid
+                    TokenValidation --> Rejected: Invalid Token
+                    
+                    RoleCheck --> PermissionCheck: Role Valid
+                    RoleCheck --> Rejected: Invalid Role
+                    
+                    PermissionCheck --> ResourceAccess: Permission Granted
+                    PermissionCheck --> Rejected: Permission Denied
+                    
+                    ResourceAccess --> AuditLog: Access Complete
+                    Rejected --> AuditLog: Access Denied
+                    
+                    AuditLog --> [*]
+            </div>
+        </div>
+    </section>
+
+    <section id="deployment">
+        <h2>7. Deployment Architecture</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Infrastructure Components</h4>
+                <ul>
+                    <li>Kubernetes Cluster</li>
+                    <li>Service Mesh</li>
+                    <li>Load Balancers</li>
+                    <li>Storage Systems</li>
+                    <li>Monitoring Stack</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h4>Key Features</h4>
+                <ul>
+                    <li>High Availability</li>
+                    <li>Horizontal Scaling</li>
+                    <li>Auto Recovery</li>
+                    <li>Rolling Updates</li>
+                    <li>Resource Optimization</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Kubernetes Architecture</h3>
+            <div class="mermaid">
+                graph TB
+                    subgraph Cluster[Kubernetes Cluster]
+                        direction TB
+                        
+                        subgraph Ingress[Ingress Layer]
+                            LB[Load Balancer]
+                            WAF[Web Application Firewall]
+                        end
+                        
+                        subgraph Services[Service Layer]
+                            DMS[Device Management]
+                            CES[Certificate Service]
+                            AMS[Activation Service]
+                            IMS[Integrator Service]
+                            MMS[Music Service]
+                            OMS[OAuth Service]
+                            SMS[Streaming Service]
+                        end
+                        
+                        subgraph Data[Data Layer]
+                            DB[(SurrealDB)]
+                            Cache[(Redis)]
+                            Storage[(Object Storage)]
+                        end
+                        
+                        subgraph Monitor[Monitoring]
+                            Metrics[Metrics Collection]
+                            Logs[Log Aggregation]
+                            Alerts[Alert Management]
+                        end
+                    end
+                    
+                    Ingress --> Services
+                    Services --> Data
+                    Services --> Monitor
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Service Deployment Flow</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant CI as CI/CD Pipeline
+                    participant K as Kubernetes API
+                    participant SM as Service Mesh
+                    participant S as Service Pods
+                    participant M as Monitoring
+                    
+                    CI->>K: Deploy Update
+                    K->>SM: Update Service Mesh Config
+                    K->>S: Rolling Update
+                    
+                    par Health Checks
+                        S->>M: Report Health
+                        M->>K: Health Status
+                    and Traffic Management
+                        SM->>S: Route Traffic
+                    end
+                    
+                    alt Deployment Success
+                        K->>CI: Update Complete
+                    else Deployment Issue
+                        K->>CI: Rollback Initiated
+                        K->>S: Restore Previous Version
+                    end
+            </div>
+        </div>
+
+        <div class="flow-section">
+            <h3>Scaling Architecture</h3>
+            <div class="mermaid">
+                flowchart TB
+                    subgraph Scaling[Scaling Components]
+                        direction TB
+                        
+                        subgraph Metrics[Metrics Collection]
+                            CPU[CPU Usage]
+                            MEM[Memory Usage]
+                            REQ[Request Rate]
+                        end
+                        
+                        subgraph Rules[Scaling Rules]
+                            HPA[Horizontal Pod Autoscaler]
+                            VPA[Vertical Pod Autoscaler]
+                        end
+                        
+                        subgraph Actions[Scaling Actions]
+                            Scale[Pod Scaling]
+                            Resource[Resource Adjustment]
+                            Balance[Load Balancing]
+                        end
+                    end
+                    
+                    Metrics --> Rules
+                    Rules --> Actions
+            </div>
+        </div>
+    </section>
 </body>
 </html>
