@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Management System Documentation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #4285f4;
+            --text-color: #333;
+            --bg-color: #fff;
+            --sidebar-bg: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            display: flex;
+        }
+
+        #sidebar {
+            width: 300px;
+            height: 100vh;
+            position: fixed;
+            background: var(--sidebar-bg);
+            padding: 2rem;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+        }
+
+        #content {
+            margin-left: 300px;
+            padding: 2rem;
+            width: calc(100% - 300px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .service-diagram {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .subsection {
+            margin-left: 1rem;
+        }
+
+        .service-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .diagram-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav id="sidebar">
+        <h2>Contents</h2>
+        <a href="#overview" class="nav-link">1. System Overview</a>
+        <a href="#architecture" class="nav-link">2. System Architecture</a>
+        <a href="#services" class="nav-link">3. Services</a>
+        <div class="subsection">
+            <a href="#activation" class="nav-link">3.1 Activation Management</a>
+            <a href="#certificate" class="nav-link">3.2 Certificate Management</a>
+            <a href="#device" class="nav-link">3.3 Device Management</a>
+            <a href="#integrator" class="nav-link">3.4 Integrator Management</a>
+            <a href="#music" class="nav-link">3.5 Music Management</a>
+            <a href="#oauth" class="nav-link">3.6 OAuth Management</a>
+            <a href="#streaming" class="nav-link">3.7 Streaming Management</a>
+        </div>
+        <a href="#communication" class="nav-link">4. Service Communication</a>
+        <a href="#security" class="nav-link">5. Security Considerations</a>
+        <a href="#deployment" class="nav-link">6. Deployment</a>
+    </nav>
+
+    <main id="content">
+        <h1>Central Management System Documentation</h1>
+        
+        <section id="overview">
+            <h2>1. System Overview</h2>
+            <p>The Central Management System (CMS) is a comprehensive microservices-based platform designed to manage IoT devices, system integrators, and various streaming services. The system provides robust device management, security, authentication, and streaming capabilities through a set of interconnected microservices.</p>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+                    graph TB
+                    CMS[Central Management System]
+                    AMS[Activation Management]
+                    CES[Certificate Management]
+                    DMS[Device Management]
+                    IMS[Integrator Management]
+                    MMS[Music Management]
+                    OMS[OAuth Management]
+                    SMS[Streaming Management]
+                    
+                    CMS --> AMS
+                    CMS --> CES
+                    CMS --> DMS
+                    CMS --> IMS
+                    CMS --> MMS
+                    CMS --> OMS
+                    CMS --> SMS
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>2. System Architecture</h2>
+            <p>The system follows a microservices architecture pattern with the following key characteristics:</p>
+            <ul>
+                <li>gRPC-based communication between services</li>
+                <li>SurrealDB as the primary database</li>
+                <li>JWT-based authentication</li>
+                <li>Mutual TLS (mTLS) for secure communication</li>
+            </ul>
+
+            <div class="diagram-container">
+                <div class="mermaid">
+                    flowchart TB
+                    subgraph External
+                        Client[Client Applications]
+                        Devices[IoT Devices]
+                    end
+
+                    subgraph CMS[Central Management System]
+                        IMS[Integrator Management]
+                        DMS[Device Management]
+                        CES[Certificate Management]
+                        AMS[Activation Management]
+                        MMS[Music Management]
+                        OMS[OAuth Management]
+                        SMS[Streaming Management]
+                    end
+
+                    Client --> IMS
+                    Devices --> DMS
+                    DMS <--> CES
+                    DMS <--> AMS
+                    IMS <--> AMS
+                    DMS <--> IMS
+                    Devices <--> SMS
+                    Devices <--> MMS
+                    MMS <--> OMS
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <h2>3. Services</h2>
+
+            <section id="activation" class="service-card">
+                <h3>3.1 Activation Management Service</h3>
+                <p>Manages the activation lifecycle for both integrators and devices, handling token generation, verification, and completion of activation processes.</p>
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        sequenceDiagram
+                            participant C as Client
+                            participant A as Activation Service
+                            participant I as Integrator Service
+                            participant D as Device Service
+                            
+                            C->>A: Generate Activation
+                            A->>A: Create Activation Code
+                            A-->>C: Return Activation Code
+                            C->>A: Verify Activation
+                            A->>A: Validate Code
+                            A-->>C: Confirm Validity
+                            C->>A: Complete Activation
+                            A->>I: Update Integrator Status
+                            A->>D: Update Device Status
+                    </div>
+                </div>
+            </section>
+
+            <section id="certificate" class="service-card">
+                <h3>3.2 Certificate Management Service</h3>
+                <p>Handles PKI operations including CA management and device certificate lifecycle management for mutual TLS authentication.</p>
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        sequenceDiagram
+                            participant D as Device
+                            participant C as Certificate Service
+                            participant CA as CA Storage
+                            
+                            D->>C: Request Certificate
+                            C->>CA: Check CA Status
+                            CA-->>C: Return CA Info
+                            C->>C: Generate Device Certificate
+                            C-->>D: Return Certificate Bundle
+                    </div>
+                </div>
+            </section>
+
+            <section id="device" class="service-card">
+                <h3>3.3 Device Management Service</h3>
+                <p>Manages device lifecycle, health monitoring, and status tracking within the system.</p>
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        stateDiagram-v2
+                            [*] --> Pending
+                            Pending --> Active: Activation
+                            Active --> Inactive: Deactivation
+                            Inactive --> Active: Reactivation
+                            Active --> Maintenance
+                            Maintenance --> Active
+                            Active --> Decommissioned
+                            Inactive --> Decommissioned
+                    </div>
+                </div>
+            </section>
+
+            <section id="integrator" class="service-card">
+                <h3>3.4 Integrator Management Service</h3>
+                <p>Handles system integrator account management, team management, and workspace organization.</p>
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        graph TB
+                            I[Integrator] --> T[Team Management]
+                            I --> W[Workspace Management]
+                            I --> D[Device Assignment]
+                            T --> R[Role Management]
+                            W --> DA[Device Access]
+                            W --> TM[Team Member Access]
+                    </div>
+                </div>
+            </section>
+
+            <section id="music" class="service-card">
+                <h3>3.5 Music Management Service</h3>
+                <p>Provides unified authentication and provider management for multiple music streaming services.</p>
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        graph LR
+                            M[Music Service] --> S[Spotify]
+                            M --> T[Tidal]
+                            M --> D[Deezer]
+                            M --> Y[YouTube Music]
+                    </div>
+                </div>
+            </section>
+
+            <section id="oauth" class="service-card">
+                <h3>3.6 OAuth Management Service</h3>
+                <p>Manages OAuth 2.0 authentication flows for multiple providers.</p>
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        sequenceDiagram
+                            participant C as Client
+                            participant O as OAuth Service
+                            participant P as Provider
+                            
+                            C->>O: Request Auth URL
+                            O->>P: Get Authorization URL
+                            P-->>O: Return URL
+                            O-->>C: Return URL
+                            C->>O: Complete Auth
+                            O->>P: Exchange Code
+                            P-->>O: Return Tokens
+                            O-->>C: Return Tokens
+                    </div>
+                </div>
+            </section>
+
+            <section id="streaming" class="service-card">
+                <h3>3.7 Streaming Management Service</h3>
+                <p>Handles real-time video/audio streaming sessions for CCTV and intercom systems.</p>
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        graph TB
+                            S[Streaming Service]
+                            S --> SM[Session Management]
+                            S --> VM[Viewer Management]
+                            S --> QM[Quality Management]
+                            SM --> B[Buffer Management]
+                            VM --> C[Connection Registry]
+                            QM --> A[Adaptive Streaming]
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section id="communication">
+            <h2>4. Service Communication</h2>
+            <p>All services communicate using gRPC with Protocol Buffers. The communication patterns include:</p>
+            <ul>
+                <li>Request/Response patterns for synchronous operations</li>
+                <li>Server streaming for real-time updates</li>
+                <li>Client streaming for batch operations</li>
+                <li>Bidirectional streaming for real-time communication</li>
+            </ul>
+        </section>
+
+        <section id="security">
+            <h2>5. Security Considerations</h2>
+            <ul>
+                <li>All service-to-service communication is secured using mutual TLS</li>
+                <li>JWT-based authentication for client applications</li>
+                <li>Role-based access control (RBAC) for authorization</li>
+                <li>Secure token management and storage</li>
+                <li>Regular certificate rotation and renewal</li>
+                <li>Encrypted configuration management</li>
+            </ul>
+        </section>
+
+        <section id="deployment">
+            <h2>6. Deployment</h2>
+            <p>System requirements for deployment:</p>
+            <ul>
+                <li>Rust 1.70 or higher</li>
+                <li>SurrealDB instance</li>
+                <li>TLS certificates for secure communication</li>
+                <li>Configuration management system</li>
+                <li>Monitoring and logging infrastructure</li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+        });
+    </script>
+</body>
+</html>
