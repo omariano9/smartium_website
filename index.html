@@ -41,6 +41,7 @@
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
         /* Navigation */
@@ -129,10 +130,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 80px 80px 80px;
+            padding: 120px 40px 80px;
             position: relative;
             overflow: hidden;
-
             background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.6) 100%),
                 url('background.jpg') center/cover no-repeat;
             background-blend-mode: lighten;
@@ -142,7 +142,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 80px;
+            gap: clamp(40px, 8vw, 80px);
+            width: 100%;
+            max-width: var(--max-width);
         }
 
         .hero-left {
@@ -150,8 +152,8 @@
         }
 
         .logo-rectangle {
-            width: 180px;
-            height: 180px;
+            width: clamp(120px, 15vw, 180px);
+            height: clamp(120px, 15vw, 180px);
             border-radius: 24px;
             background: linear-gradient(to bottom right, var(--primary-blue), var(--primary-blue-hover));
             display: flex;
@@ -162,7 +164,7 @@
 
         .logo-rectangle .logo-text {
             color: white;
-            font-size: 28px;
+            font-size: clamp(20px, 2.5vw, 28px);
             font-weight: 700;
             font-family: 'Inter', sans-serif;
         }
@@ -170,13 +172,14 @@
         .hero-right {
             flex: 1;
             text-align: left;
+            max-width: 700px;
         }
 
         .logo-box {
-            width: 180px;
-            height: 180px;
+            width: clamp(120px, 15vw, 180px);
+            height: clamp(120px, 15vw, 180px);
             border-radius: 24px;
-            background: linear-gradient(135deg, #1A73E8, #1557B0); /* Redwood primary + dark */
+            background: linear-gradient(135deg, #1A73E8, #1557B0);
             box-shadow: 0 12px 18px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -185,7 +188,7 @@
 
         .logo-label {
             color: white;
-            font-size: 28px;
+            font-size: clamp(20px, 2.5vw, 28px);
             font-weight: 700;
             font-family: 'Inter', sans-serif;
         }
@@ -217,10 +220,10 @@
             33% { transform: translate(30px, -30px) rotate(120deg); }
             66% { transform: translate(-20px, 20px) rotate(240deg); }
         }
+
         .hero-content {
             text-align: left;
             max-width: 1000px;
-            margin-left: 100px; /* shifted right */
         }
 
         .hero-badge {
@@ -251,7 +254,6 @@
 
         .hero-title {
             font-size: clamp(36px, 6vw, 80px);
-            margin-left: 20px;
             font-weight: 800;
             line-height: 1;
             margin-bottom: 32px;
@@ -268,14 +270,11 @@
 
         .hero-subtitle {
             font-size: clamp(16px, 2.5vw, 22px);
-            margin-left: 20px;
             color: var(--text-secondary);
             font-weight: 400;
             margin-bottom: 48px;
             line-height: 1.5;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         /* Buttons */
@@ -286,83 +285,84 @@
             flex-wrap: wrap;
         }
 
-.button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 36px;
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    transition: 
-        background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
-        transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    border: none;
-    outline: none;
-    user-select: none;
-    box-shadow: var(--shadow-sm);
-    will-change: transform, box-shadow;
-}
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 36px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: 
+                background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            outline: none;
+            user-select: none;
+            box-shadow: var(--shadow-sm);
+            will-change: transform, box-shadow;
+        }
 
-.button-primary {
-    background: var(--primary-blue);
-    color: white;
-}
+        .button-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
 
-.button-primary:hover,
-.button-primary:focus-visible {
-    background: var(--primary-blue-hover);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-3px);
-    outline-offset: 2px;
-}
+        .button-primary:hover,
+        .button-primary:focus-visible {
+            background: var(--primary-blue-hover);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            outline-offset: 2px;
+        }
 
-.button-primary:active {
-    background: var(--primary-blue-active, #005bb5);
-    box-shadow: var(--shadow-sm);
-    transform: translateY(0);
-}
+        .button-primary:active {
+            background: var(--primary-blue-active, #005bb5);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(0);
+        }
 
-.button-secondary {
-    background: transparent;
-    color: var(--primary-blue);
-    border: 2px solid var(--primary-blue);
-    font-weight: 600;
-    padding: 12px 32px;
-    box-shadow: none;
-}
+        .button-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            font-weight: 600;
+            padding: 12px 32px;
+            box-shadow: none;
+        }
 
-.button-secondary:hover,
-.button-secondary:focus-visible {
-    background: var(--accent-light);
-    border-color: var(--primary-blue-hover);
-    color: var(--primary-blue-hover);
-    box-shadow: var(--shadow-sm);
-}
+        .button-secondary:hover,
+        .button-secondary:focus-visible {
+            background: var(--accent-light);
+            border-color: var(--primary-blue-hover);
+            color: var(--primary-blue-hover);
+            box-shadow: var(--shadow-sm);
+        }
 
-.button-secondary:active {
-    background: var(--accent-light-active, #e0f0ff);
-    border-color: var(--primary-blue-active, #005bb5);
-    color: var(--primary-blue-active, #005bb5);
-    box-shadow: none;
-}
+        .button-secondary:active {
+            background: var(--accent-light-active, #e0f0ff);
+            border-color: var(--primary-blue-active, #005bb5);
+            color: var(--primary-blue-active, #005bb5);
+            box-shadow: none;
+        }
 
         /* Section */
         .section {
-            padding: 100px 0;
+            padding: clamp(60px, 10vw, 100px) 0;
         }
 
         .section-header {
             text-align: center;
             max-width: 800px;
-            margin: 0 auto 64px;
+            margin: 0 auto clamp(40px, 6vw, 64px);
+            padding: 0 20px;
         }
 
         .section-title {
-            font-size: clamp(36px, 5vw, 56px);
+            font-size: clamp(32px, 5vw, 56px);
             font-weight: 700;
             margin-bottom: 20px;
             letter-spacing: -0.02em;
@@ -370,7 +370,7 @@
         }
 
         .section-subtitle {
-            font-size: 20px;
+            font-size: clamp(18px, 2.5vw, 20px);
             color: var(--text-secondary);
             line-height: 1.6;
         }
@@ -378,64 +378,64 @@
         /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
             gap: 32px;
         }
 
-.feature-card {
-    background: var(--background);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    padding: 40px 32px;
-    transition: 
-        box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
-        transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
-        border-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: default;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
+        .feature-card {
+            background: var(--background);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: clamp(32px, 4vw, 40px) clamp(24px, 3vw, 32px);
+            transition: 
+                box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
 
-.feature-card:hover,
-.feature-card:focus-within {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-    border-color: transparent;
-}
+        .feature-card:hover,
+        .feature-card:focus-within {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: transparent;
+        }
 
-.feature-icon {
-    width: 40vh;
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 16px;
-}
+        .feature-icon {
+            width: clamp(30vh, 40vh, 200px);
+            height: clamp(30vh, 40vh, 200px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+        }
 
-.feature-icon img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    display: block;
-    text-align: center;
-}
+        .feature-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
 
-.feature-title {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--text-primary);
-    line-height: 1.2;
-}
+        .feature-title {
+            font-size: clamp(22px, 3vw, 26px);
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
 
-.feature-description {
-    color: var(--text-secondary);
-    font-size: 17px;
-    line-height: 1.5;
-    user-select: text;
-}
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: clamp(16px, 2vw, 17px);
+            line-height: 1.5;
+            user-select: text;
+        }
 
         /* Coming Soon Section */
         .coming-soon-section {
@@ -445,7 +445,7 @@
         .coming-soon {
             background: var(--background);
             border-radius: var(--border-radius-xl);
-            padding: 80px 64px;
+            padding: clamp(48px, 8vw, 80px) clamp(32px, 5vw, 64px);
             text-align: center;
             box-shadow: var(--shadow-sm);
         }
@@ -453,7 +453,7 @@
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 48px;
+            gap: clamp(24px, 4vw, 48px);
             margin: 48px 0;
             flex-wrap: wrap;
         }
@@ -463,7 +463,7 @@
         }
 
         .countdown-value {
-            font-size: 64px;
+            font-size: clamp(48px, 6vw, 64px);
             font-weight: 700;
             color: var(--primary-blue);
             line-height: 1;
@@ -471,7 +471,7 @@
         }
 
         .countdown-label {
-            font-size: 14px;
+            font-size: clamp(12px, 1.5vw, 14px);
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -521,12 +521,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 60px;
+            gap: clamp(30px, 5vw, 60px);
             flex-wrap: wrap;
         }
 
         .partner-item {
-            font-size: 24px;
+            font-size: clamp(20px, 2.5vw, 24px);
             font-weight: 600;
             color: var(--text-secondary);
             opacity: 0.7;
@@ -542,21 +542,21 @@
         .security-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 100px;
+            gap: clamp(40px, 8vw, 100px);
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .security-text h3 {
-            font-size: 48px;
+            font-size: clamp(32px, 4vw, 48px);
             font-weight: 700;
             margin-bottom: 24px;
             letter-spacing: -0.02em;
         }
 
         .security-text p {
-            font-size: 18px;
+            font-size: clamp(16px, 2vw, 18px);
             color: var(--text-secondary);
             line-height: 1.7;
         }
@@ -568,8 +568,8 @@
         }
 
         .security-icon-wrapper {
-            width: 240px;
-            height: 240px;
+            width: clamp(180px, 20vw, 240px);
+            height: clamp(180px, 20vw, 240px);
             background: linear-gradient(135deg, var(--accent-light) 0%, var(--surface) 100%);
             border-radius: 50%;
             display: flex;
@@ -579,22 +579,22 @@
         }
 
         .security-icon-inner {
-            width: 180px;
-            height: 180px;
+            width: 75%;
+            height: 75%;
             background: var(--background);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 80px;
+            font-size: clamp(60px, 8vw, 80px);
             box-shadow: var(--shadow-sm);
         }
 
         /* Footer */
         footer {
             background: var(--surface);
-            padding: 64px 0;
-            margin-top: 100px;
+            padding: clamp(48px, 6vw, 64px) 0;
+            margin-top: clamp(60px, 10vw, 100px);
         }
 
         .footer-content {
@@ -677,7 +677,26 @@
             margin-top: 40px;
         }
 
-        /* Responsive */
+        /* Responsive - Tablet */
+        @media (max-width: 1024px) {
+            .hero {
+                padding: 100px 40px 60px;
+            }
+
+            .hero-columns {
+                gap: 60px;
+            }
+
+            .security-content {
+                gap: 60px;
+            }
+
+            .partners-list {
+                gap: 40px;
+            }
+        }
+
+        /* Responsive - Mobile */
         @media (max-width: 768px) {
             .container {
                 padding: 0 24px;
@@ -687,8 +706,32 @@
                 padding: 16px 24px;
             }
 
+            .hero {
+                padding: 100px 24px 60px;
+                min-height: auto;
+            }
+
+            .hero-columns {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero-right {
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: clamp(32px, 8vw, 48px);
+                margin-bottom: 24px;
+            }
+
+            .hero-subtitle {
+                margin-bottom: 32px;
+            }
+
             .section {
-                padding: 64px 0;
+                padding: 60px 0;
             }
 
             .features-grid {
@@ -696,20 +739,26 @@
                 gap: 24px;
             }
 
+            .feature-icon {
+                width: 150px;
+                height: 150px;
+            }
+
             .coming-soon {
                 padding: 48px 32px;
             }
 
             .countdown {
-                gap: 32px;
-            }
-
-            .countdown-value {
-                font-size: 48px;
+                gap: 24px;
             }
 
             .subscription-form {
                 flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+                padding: 16px 32px;
             }
 
             .security-content {
@@ -719,7 +768,7 @@
             }
 
             .security-text h3 {
-                font-size: 36px;
+                font-size: 32px;
             }
 
             .footer-content {
@@ -729,6 +778,56 @@
 
             .social-links {
                 margin-top: 24px;
+            }
+
+            .partners-list {
+                gap: 20px 30px;
+            }
+
+            .partner-item {
+                font-size: 18px;
+            }
+        }
+
+        /* Responsive - Small Mobile */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 90px 20px 50px;
+            }
+
+            .logo-rectangle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .feature-card {
+                padding: 28px 20px;
+            }
+
+            .countdown-value {
+                font-size: 40px;
+            }
+
+            .security-icon-wrapper {
+                width: 160px;
+                height: 160px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 16px;
             }
         }
 
@@ -752,8 +851,6 @@
     </style>
 </head>
 <body>
-    <!-- Background Pattern -->
-
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
@@ -766,22 +863,22 @@
 
     <!-- Hero Section -->
     <section class="hero">
-    <div class="container hero-columns">
-        <div class="hero-left">
-        <div class="logo-rectangle">
-            <span class="logo-text">smartium</span>
+        <div class="hero-columns">
+            <div class="hero-left">
+                <div class="logo-rectangle">
+                    <span class="logo-text">smartium</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <h1 class="hero-title fade-in fade-in-delay-1">
+                    <span class="gradient-text">living. perfected.</span>
+                </h1>
+                <p class="hero-subtitle fade-in fade-in-delay-2">
+                    experience the next generation of luxury home automation.<br>
+                    intelligently designed. beautifully simple.
+                </p>
+            </div>
         </div>
-        </div>
-        <div class="hero-right">
-        <h1 class="hero-title fade-in fade-in-delay-1">
-            <span class="gradient-text">living. perfected.</span>
-        </h1>
-        <p class="hero-subtitle fade-in fade-in-delay-2">
-            experience the next generation of luxury home automation.<br>
-            intelligently designed. beautifully simple.
-        </p>
-        </div>
-    </div>
     </section>
 
     <!-- Features Section -->
@@ -795,38 +892,38 @@
                 </p>
             </div>
             <div class="features-grid">
-<div class="feature-card">
-    <div class="feature-icon">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/KNX_logo.svg" alt="KNX Logo" />
-    </div>
-    <h3 class="feature-title">KNX</h3>
-    <p class="feature-description">
-        Professional-grade KNX integration. Control lighting, 
-        climate, blinds, and energy management with enterprise reliability.
-    </p>
-</div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/KNX_logo.svg" alt="KNX Logo" />
+                    </div>
+                    <h3 class="feature-title">KNX</h3>
+                    <p class="feature-description">
+                        Professional-grade KNX integration. Control lighting, 
+                        climate, blinds, and energy management with enterprise reliability.
+                    </p>
+                </div>
 
-<div class="feature-card">
-    <div class="feature-icon">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_of_Matter_connectivity_standard.svg" alt="Matter over Thread Logo" />
-    </div>
-    <h3 class="feature-title">Matter over Thread</h3>
-    <p class="feature-description">
-        Next-gen Matter protocol with Thread mesh networking for ultra-reliable, 
-        low-latency device communication and seamless ecosystem integration.
-    </p>
-</div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_of_Matter_connectivity_standard.svg" alt="Matter over Thread Logo" />
+                    </div>
+                    <h3 class="feature-title">Matter over Thread</h3>
+                    <p class="feature-description">
+                        Next-gen Matter protocol with Thread mesh networking for ultra-reliable, 
+                        low-latency device communication and seamless ecosystem integration.
+                    </p>
+                </div>
 
-<div class="feature-card">
-    <div class="feature-icon">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/DLNA_logo.svg" alt="Multimedia Hub Logo" />
-    </div>
-    <h3 class="feature-title">Multimedia Hub</h3>
-    <p class="feature-description">
-        Centralized control for all entertainment systems, from multi-room audio 
-        to home theaters and streaming services.
-    </p>
-</div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/DLNA_logo.svg" alt="Multimedia Hub Logo" />
+                    </div>
+                    <h3 class="feature-title">Multimedia Hub</h3>
+                    <p class="feature-description">
+                        Centralized control for all entertainment systems, from multi-room audio 
+                        to home theaters and streaming services.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -907,8 +1004,11 @@
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
         
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        // Only run countdown if elements exist
+        if (document.getElementById('days')) {
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
         
         // Form Handler
         function handleSubscribe(e) {
