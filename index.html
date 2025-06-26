@@ -174,37 +174,106 @@
         }
 
         .product-visual {
-            width: 600px;
-            height: 180px;
+            width: 800px;
+            height: 320px;
             margin: 0 auto;
             position: relative;
-            animation: productFloat 8s ease-in-out infinite;
-            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
         }
 
-        .device-container {
-            width: 100%;
-            height: 100%;
+        .device-view {
+            width: 200px;
+            height: 200px;
             position: relative;
-            perspective: 1200px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .device-body {
+        .device-view:hover {
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        /* Front View */
+        .device-front {
+            background: linear-gradient(135deg, #f5f5f7 0%, #e5e5e7 100%);
+            border-radius: 16px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
             width: 100%;
             height: 100%;
+        }
+
+        .device-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .front-leds {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 12px;
+        }
+
+        .status-led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: statusPulse 2s infinite;
+        }
+
+        .led-power {
+            background: #30d158;
+            box-shadow: 
+                0 0 8px rgba(48, 209, 88, 0.6),
+                0 0 16px rgba(48, 209, 88, 0.3);
+        }
+
+        .led-network {
+            background: var(--primary-blue);
+            box-shadow: 
+                0 0 8px rgba(0, 122, 255, 0.6),
+                0 0 16px rgba(0, 122, 255, 0.3);
+            animation-delay: 0.5s;
+        }
+
+        .led-activity {
+            background: #ff9500;
+            box-shadow: 
+                0 0 8px rgba(255, 149, 0, 0.6),
+                0 0 16px rgba(255, 149, 0, 0.3);
+            animation-delay: 1s;
+        }
+
+        /* Back View */
+        .device-back {
             background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
-            border-radius: 12px;
-            position: relative;
+            border-radius: 16px;
             box-shadow: 
                 0 8px 32px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transform: rotateY(-15deg) rotateX(5deg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
         }
 
-        .device-body::before {
+        .device-back::before {
             content: '';
             position: absolute;
             top: 0;
@@ -212,108 +281,159 @@
             right: 0;
             height: 30%;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
-            border-radius: 12px 12px 0 0;
-            pointer-events: none;
+            border-radius: 16px 16px 0 0;
         }
 
-        .device-body::after {
+        .back-connectors {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .connector-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .connector {
+            position: relative;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .connector-ethernet {
+            width: 20px;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .connector-ethernet::after {
+            content: 'ETH';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .connector-knx {
+            width: 16px;
+            height: 10px;
+            background: rgba(0, 122, 255, 0.3);
+            border-color: rgba(0, 122, 255, 0.5);
+        }
+
+        .connector-knx::after {
+            content: 'KNX';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: rgba(0, 122, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .connector-usb {
+            width: 12px;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .connector-usb::after {
+            content: 'USB';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .connector-power {
+            width: 10px;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+        }
+
+        .connector-power::after {
+            content: 'PWR';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        /* Top View */
+        .device-top {
+            background: linear-gradient(135deg, #f5f5f7 0%, #e5e5e7 100%);
+            border-radius: 16px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .device-top::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(0, 122, 255, 0.3) 20%, 
-                rgba(0, 122, 255, 0.6) 50%, 
-                rgba(0, 122, 255, 0.3) 80%, 
-                transparent 100%);
-            border-radius: 0 0 12px 12px;
-            animation: powerGlow 3s ease-in-out infinite;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+            border-radius: 16px 16px 0 0;
         }
 
-        .device-front {
-            position: absolute;
-            right: -8px;
-            top: 0;
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(90deg, #1a1a1c 0%, #0a0a0a 100%);
-            border-radius: 0 12px 12px 0;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-left: none;
-        }
-
-        .device-logo {
+        .top-edge-logo {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: var(--primary-blue);
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
-            letter-spacing: 6px;
-            text-shadow: 0 0 20px rgba(0, 122, 255, 0.4);
+            color: var(--text-primary);
+            letter-spacing: 4px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .status-led {
+        .top-smartium-logo {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 8px;
-            height: 8px;
-            background: #30d158;
-            border-radius: 50%;
-            animation: statusPulse 2s infinite;
-            box-shadow: 
-                0 0 8px rgba(48, 209, 88, 0.6),
-                0 0 16px rgba(48, 209, 88, 0.3);
+            bottom: 16px;
+            right: 16px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
         }
 
-        .device-ports {
+        .device-view-label {
             position: absolute;
-            bottom: 15px;
-            left: 20px;
-            display: flex;
-            gap: 8px;
-        }
-
-        .port {
-            width: 12px;
-            height: 6px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 2px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .device-vents {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            right: 80px;
-            height: 2px;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent 0px,
-                transparent 3px,
-                rgba(255, 255, 255, 0.1) 3px,
-                rgba(255, 255, 255, 0.1) 4px
-            );
-        }
-
-        .device-vents:nth-child(2) {
-            top: 25px;
-        }
-
-        .device-label {
-            position: absolute;
-            bottom: 15px;
-            right: 20px;
-            font-size: 8px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 500;
-            letter-spacing: 1px;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: center;
         }
 
         .product-glow {
@@ -722,18 +842,6 @@
             }
         }
 
-        @keyframes productFloat {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            33% {
-                transform: translateY(-6px);
-            }
-            66% {
-                transform: translateY(-3px);
-            }
-        }
-
         @keyframes statusPulse {
             0%, 100% {
                 opacity: 1;
@@ -808,34 +916,27 @@
             }
             
             .product-visual {
-                width: 280px;
-                height: 200px;
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+                gap: 40px;
             }
             
-            .device-body {
-                width: 240px;
+            .device-view {
+                width: 160px;
                 height: 160px;
             }
             
-            .device-front {
-                width: 24px;
-                height: 160px;
-                right: -12px;
-                top: 20px;
+            .top-edge-logo {
+                font-size: 24px;
+                letter-spacing: 3px;
             }
             
-            .device-logo {
-                font-size: 20px;
-                letter-spacing: 4px;
-            }
-            
-            .device-ports {
-                gap: 8px;
-            }
-            
-            .port {
-                width: 12px;
-                height: 6px;
+            .top-smartium-logo {
+                font-size: 8px;
+                letter-spacing: 1px;
+                bottom: 12px;
+                right: 12px;
             }
             
             .features-grid,
@@ -899,30 +1000,40 @@
             <div class="product-showcase">
                 <div class="product-glow"></div>
                 <div class="product-visual">
-                    <div class="device-container">
-                        <div class="device-body">
-                            <div class="device-logo">EDGE</div>
-                            <div class="status-led"></div>
-                            <div class="device-vents"></div>
-                            <div class="device-vents" style="top: 26px;"></div>
-                            <div class="device-vents" style="top: 36px;"></div>
-                            <div class="device-ports">
-                                <div class="port"></div>
-                                <div class="port"></div>
-                                <div class="port"></div>
-                                <div class="port"></div>
+                    <div class="device-view">
+                        <div class="device-front">
+                            <div class="front-leds">
+                                <div class="status-led led-power"></div>
+                                <div class="status-led led-network"></div>
+                                <div class="status-led led-activity"></div>
                             </div>
-                            <div class="device-label">SMARTIUM</div>
                         </div>
+                        <div class="device-view-label">Front</div>
+                    </div>
+                    
+                    <div class="device-view">
+                        <div class="device-back">
+                            <div class="back-connectors">
+                                <div class="connector-row">
+                                    <div class="connector connector-ethernet"></div>
+                                    <div class="connector connector-knx"></div>
+                                </div>
+                                <div class="connector-row">
+                                    <div class="connector connector-usb"></div>
+                                    <div class="connector connector-usb"></div>
+                                    <div class="connector connector-power"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="device-view-label">Back</div>
+                    </div>
+                    
+                    <div class="device-view">
                         <div class="device-top">
-                            <div class="top-vents"></div>
+                            <div class="top-edge-logo">EDGE</div>
+                            <div class="top-smartium-logo">SMARTIUM</div>
                         </div>
-                        <div class="device-side">
-                            <div class="side-ports">
-                                <div class="side-port"></div>
-                                <div class="side-port"></div>
-                            </div>
-                        </div>
+                        <div class="device-view-label">Top</div>
                     </div>
                 </div>
             </div>
@@ -1227,33 +1338,16 @@
             });
         });
 
-        // Product visual 3D tilt effect
-        const productVisual = document.querySelector('.product-visual');
-        if (productVisual) {
-            productVisual.addEventListener('mousemove', (e) => {
-                const rect = productVisual.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 8;
-                const rotateY = (centerX - x) / 8;
-                
-                const deviceBody = productVisual.querySelector('.device-body');
-                if (deviceBody) {
-                    deviceBody.style.transform = `rotateY(${-5 + rotateY}deg) rotateX(${15 + rotateX}deg) translateY(-4px)`;
-                }
+        // Enhanced device view interactions
+        document.querySelectorAll('.device-view').forEach(view => {
+            view.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.08)';
             });
             
-            productVisual.addEventListener('mouseleave', () => {
-                const deviceBody = productVisual.querySelector('.device-body');
-                if (deviceBody) {
-                    deviceBody.style.transform = 'rotateY(-5deg) rotateX(15deg) translateY(0)';
-                }
+            view.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
             });
-        }
+        });
 
         // Preload animations
         window.addEventListener('load', () => {
