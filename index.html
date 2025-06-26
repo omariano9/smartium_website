@@ -174,42 +174,146 @@
         }
 
         .product-visual {
-            width: 480px;
-            height: 320px;
-            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+            width: 600px;
+            height: 180px;
             margin: 0 auto;
-            border-radius: 24px;
             position: relative;
-            box-shadow: var(--shadow-large);
             animation: productFloat 8s ease-in-out infinite;
             transform-style: preserve-3d;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .product-visual::before {
-            content: 'EDGE';
+        .device-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            perspective: 1200px;
+        }
+
+        .device-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: rotateY(-15deg) rotateX(5deg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .device-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+            border-radius: 12px 12px 0 0;
+            pointer-events: none;
+        }
+
+        .device-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 122, 255, 0.3) 20%, 
+                rgba(0, 122, 255, 0.6) 50%, 
+                rgba(0, 122, 255, 0.3) 80%, 
+                transparent 100%);
+            border-radius: 0 0 12px 12px;
+            animation: powerGlow 3s ease-in-out infinite;
+        }
+
+        .device-front {
+            position: absolute;
+            right: -8px;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, #1a1a1c 0%, #0a0a0a 100%);
+            border-radius: 0 12px 12px 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: none;
+        }
+
+        .device-logo {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: var(--primary-blue);
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
-            letter-spacing: 8px;
-            text-shadow: 0 0 20px rgba(0, 122, 255, 0.3);
+            letter-spacing: 6px;
+            text-shadow: 0 0 20px rgba(0, 122, 255, 0.4);
         }
 
-        .product-visual::after {
-            content: '';
+        .status-led {
             position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 12px;
-            height: 12px;
+            top: 20px;
+            right: 20px;
+            width: 8px;
+            height: 8px;
             background: #30d158;
             border-radius: 50%;
             animation: statusPulse 2s infinite;
-            box-shadow: 0 0 12px rgba(48, 209, 88, 0.4);
+            box-shadow: 
+                0 0 8px rgba(48, 209, 88, 0.6),
+                0 0 16px rgba(48, 209, 88, 0.3);
+        }
+
+        .device-ports {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .port {
+            width: 12px;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .device-vents {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            right: 80px;
+            height: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 3px,
+                rgba(255, 255, 255, 0.1) 3px,
+                rgba(255, 255, 255, 0.1) 4px
+            );
+        }
+
+        .device-vents:nth-child(2) {
+            top: 25px;
+        }
+
+        .device-label {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            letter-spacing: 1px;
         }
 
         .product-glow {
@@ -620,13 +724,13 @@
 
         @keyframes productFloat {
             0%, 100% {
-                transform: translateY(0px) rotateX(5deg) rotateY(-5deg);
+                transform: translateY(0px);
             }
             33% {
-                transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+                transform: translateY(-6px);
             }
             66% {
-                transform: translateY(-4px) rotateX(-2deg) rotateY(5deg);
+                transform: translateY(-3px);
             }
         }
 
@@ -649,6 +753,15 @@
             50% {
                 opacity: 0.8;
                 transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        @keyframes powerGlow {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
             }
         }
 
@@ -695,8 +808,34 @@
             }
             
             .product-visual {
-                width: 320px;
+                width: 280px;
                 height: 200px;
+            }
+            
+            .device-body {
+                width: 240px;
+                height: 160px;
+            }
+            
+            .device-front {
+                width: 24px;
+                height: 160px;
+                right: -12px;
+                top: 20px;
+            }
+            
+            .device-logo {
+                font-size: 20px;
+                letter-spacing: 4px;
+            }
+            
+            .device-ports {
+                gap: 8px;
+            }
+            
+            .port {
+                width: 12px;
+                height: 6px;
             }
             
             .features-grid,
@@ -759,7 +898,33 @@
             </p>
             <div class="product-showcase">
                 <div class="product-glow"></div>
-                <div class="product-visual"></div>
+                <div class="product-visual">
+                    <div class="device-container">
+                        <div class="device-body">
+                            <div class="device-logo">EDGE</div>
+                            <div class="status-led"></div>
+                            <div class="device-vents"></div>
+                            <div class="device-vents" style="top: 26px;"></div>
+                            <div class="device-vents" style="top: 36px;"></div>
+                            <div class="device-ports">
+                                <div class="port"></div>
+                                <div class="port"></div>
+                                <div class="port"></div>
+                                <div class="port"></div>
+                            </div>
+                            <div class="device-label">SMARTIUM</div>
+                        </div>
+                        <div class="device-top">
+                            <div class="top-vents"></div>
+                        </div>
+                        <div class="device-side">
+                            <div class="side-ports">
+                                <div class="side-port"></div>
+                                <div class="side-port"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -910,6 +1075,10 @@
                     <div class="spec-item">
                         <span class="spec-label">Dimensions</span>
                         <span class="spec-value">220 × 140 × 45mm</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Mounting</span>
+                        <span class="spec-value">DIN rail compatible</span>
                     </div>
                 </div>
             </div>
@@ -1069,14 +1238,20 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
+                const rotateX = (y - centerY) / 8;
+                const rotateY = (centerX - x) / 8;
                 
-                productVisual.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+                const deviceBody = productVisual.querySelector('.device-body');
+                if (deviceBody) {
+                    deviceBody.style.transform = `rotateY(${-5 + rotateY}deg) rotateX(${15 + rotateX}deg) translateY(-4px)`;
+                }
             });
             
             productVisual.addEventListener('mouseleave', () => {
-                productVisual.style.transform = 'rotateX(5deg) rotateY(-5deg) translateY(0)';
+                const deviceBody = productVisual.querySelector('.device-body');
+                if (deviceBody) {
+                    deviceBody.style.transform = 'rotateY(-5deg) rotateX(15deg) translateY(0)';
+                }
             });
         }
 
