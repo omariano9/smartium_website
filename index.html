@@ -11,12 +11,28 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-blue: #007aff;
+            --dark-blue: #005ce6;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --background-primary: #fbfbfd;
+            --background-secondary: #f5f5f7;
+            --surface: #ffffff;
+            --surface-elevated: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-small: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #1d1d1f;
-            background: #fbfbfd;
+            color: var(--text-primary);
+            background: var(--background-primary);
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         .container {
@@ -30,105 +46,144 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(251, 251, 253, 0.8);
-            backdrop-filter: blur(20px);
+            background: rgba(251, 251, 253, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 0.5px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 16px 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 600;
-            color: #1d1d1f;
+            color: var(--text-primary);
+            letter-spacing: -0.022em;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 40px;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #1d1d1f;
+            color: var(--text-primary);
             font-weight: 400;
-            transition: color 0.3s ease;
+            font-size: 17px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-links a:hover {
-            color: #007aff;
+            color: var(--primary-blue);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(135deg, #fbfbfd 0%, #f5f5f7 100%);
+            background: linear-gradient(180deg, var(--background-primary) 0%, var(--background-secondary) 100%);
             position: relative;
             overflow: hidden;
+            padding: 80px 20px 0;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(0, 122, 255, 0.1) 0%, transparent 50%);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 122, 255, 0.08) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
         }
 
         .hero-content {
             z-index: 2;
-            max-width: 800px;
-            animation: fadeInUp 1s ease-out;
+            max-width: 980px;
+            animation: heroFadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(40px);
         }
 
         .hero h1 {
-            font-size: clamp(48px, 8vw, 96px);
-            font-weight: 600;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #1d1d1f 0%, #007aff 100%);
+            font-size: clamp(64px, 12vw, 128px);
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-blue) 60%, var(--dark-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
         }
 
         .hero .subtitle {
-            font-size: clamp(24px, 4vw, 48px);
+            font-size: clamp(28px, 5vw, 56px);
             font-weight: 300;
-            margin-bottom: 30px;
-            color: #86868b;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+            letter-spacing: -0.03em;
         }
 
         .hero .description {
-            font-size: 21px;
-            color: #1d1d1f;
-            margin-bottom: 40px;
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 60px;
             line-height: 1.4;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .product-showcase {
+            perspective: 1000px;
+            margin: 80px auto 0;
         }
 
         .product-visual {
-            width: 400px;
-            height: 300px;
+            width: 480px;
+            height: 320px;
             background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
-            margin: 60px auto;
-            border-radius: 20px;
+            margin: 0 auto;
+            border-radius: 24px;
             position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            animation: float 6s ease-in-out infinite;
+            box-shadow: var(--shadow-large);
+            animation: productFloat 8s ease-in-out infinite;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .product-visual::before {
@@ -137,130 +192,215 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #007aff;
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: 3px;
+            color: var(--primary-blue);
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            text-shadow: 0 0 20px rgba(0, 122, 255, 0.3);
         }
 
         .product-visual::after {
             content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 8px;
-            height: 8px;
+            top: 24px;
+            right: 24px;
+            width: 12px;
+            height: 12px;
             background: #30d158;
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            animation: statusPulse 2s infinite;
+            box-shadow: 0 0 12px rgba(48, 209, 88, 0.4);
+        }
+
+        .product-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(0, 122, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glowPulse 4s ease-in-out infinite;
         }
 
         /* Features Section */
         .features {
-            padding: 120px 0;
-            background: #fff;
+            padding: 160px 0;
+            background: var(--surface);
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 120px;
         }
 
         .section-header h2 {
-            font-size: 48px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #1d1d1f;
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            letter-spacing: -0.04em;
+            line-height: 1.1;
         }
 
         .section-header p {
-            font-size: 21px;
-            color: #86868b;
-            max-width: 600px;
+            font-size: 24px;
+            color: var(--text-secondary);
+            max-width: 700px;
             margin: 0 auto;
+            line-height: 1.4;
+            font-weight: 400;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 32px;
             margin-bottom: 80px;
         }
 
         .feature-card {
-            background: #fbfbfd;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: var(--surface-elevated);
+            backdrop-filter: blur(20px);
+            padding: 48px 40px;
+            border-radius: 24px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.02) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-large);
+            border-color: rgba(0, 122, 255, 0.2);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #007aff, #005ce6);
-            border-radius: 20px;
-            margin: 0 auto 30px;
+            width: 88px;
+            height: 88px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 22px;
+            margin-bottom: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 36px;
             color: white;
-            font-weight: 600;
+            font-weight: 700;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 24px;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(8px);
         }
 
         .feature-card h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #1d1d1f;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
 
         .feature-card p {
-            color: #86868b;
-            line-height: 1.5;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 18px;
+            font-weight: 400;
         }
 
         /* Technical Specs */
         .specs {
-            padding: 120px 0;
-            background: #f5f5f7;
+            padding: 160px 0;
+            background: var(--background-secondary);
+            position: relative;
         }
 
         .specs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 60px;
-            margin-top: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
         }
 
         .spec-category {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: var(--surface);
+            padding: 48px 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spec-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--dark-blue));
+        }
+
+        .spec-category:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-large);
         }
 
         .spec-category h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 30px;
-            color: #1d1d1f;
-            border-bottom: 2px solid #007aff;
-            padding-bottom: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
 
         .spec-item {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .spec-item:last-child {
@@ -268,183 +408,336 @@
         }
 
         .spec-label {
-            font-weight: 500;
-            color: #1d1d1f;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 17px;
         }
 
         .spec-value {
-            color: #86868b;
+            color: var(--text-secondary);
             text-align: right;
+            font-size: 17px;
+            font-weight: 500;
         }
 
         /* Setup Section */
         .setup {
-            padding: 120px 0;
-            background: #fff;
+            padding: 160px 0;
+            background: var(--surface);
+            position: relative;
         }
 
         .setup-steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 48px;
+            margin-top: 80px;
         }
 
         .setup-step {
             text-align: center;
             position: relative;
+            padding: 40px 20px;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .setup-step:hover {
+            background: rgba(0, 122, 255, 0.03);
+            transform: translateY(-4px);
         }
 
         .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #007aff, #005ce6);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
             border-radius: 50%;
-            margin: 0 auto 30px;
+            margin: 0 auto 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 32px;
+            font-weight: 700;
             color: white;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.2;
+            filter: blur(12px);
         }
 
         .setup-step h3 {
-            font-size: 21px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #1d1d1f;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
 
         .setup-step p {
-            color: #86868b;
-            line-height: 1.5;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 18px;
+            font-weight: 400;
         }
 
-        /* CTA Section */
+        /* Enhanced CTA Section */
         .cta {
-            padding: 120px 0;
+            padding: 160px 0;
             background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%);
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(0, 122, 255, 0.1) 0%, transparent 50%);
+            animation: ctaGlow 15s ease-in-out infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
         }
 
         .cta h2 {
-            font-size: 48px;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
         }
 
         .cta p {
-            font-size: 21px;
-            margin-bottom: 40px;
-            opacity: 0.8;
+            font-size: 24px;
+            margin-bottom: 48px;
+            opacity: 0.9;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 15px 30px;
-            border-radius: 30px;
+            padding: 16px 40px;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: #007aff;
+            background: var(--primary-blue);
             color: white;
+            box-shadow: var(--shadow-medium);
         }
 
         .btn-primary:hover {
-            background: #005ce6;
+            background: var(--dark-blue);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
         }
 
         .btn-secondary {
             background: transparent;
             color: white;
-            border-color: white;
+            border-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-            background: white;
-            color: #1d1d1f;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-2px);
         }
 
         /* Footer */
         footer {
-            padding: 60px 0;
-            background: #f5f5f7;
+            padding: 80px 0;
+            background: var(--background-secondary);
             text-align: center;
-            color: #86868b;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
+        footer p {
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        /* Enhanced Animations */
+        @keyframes heroFadeIn {
+            0% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
-            to {
+            100% {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @keyframes float {
+        @keyframes productFloat {
             0%, 100% {
-                transform: translateY(0px);
+                transform: translateY(0px) rotateX(5deg) rotateY(-5deg);
             }
-            50% {
-                transform: translateY(-10px);
+            33% {
+                transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+            }
+            66% {
+                transform: translateY(-4px) rotateX(-2deg) rotateY(5deg);
             }
         }
 
-        @keyframes pulse {
+        @keyframes statusPulse {
             0%, 100% {
                 opacity: 1;
+                transform: scale(1);
             }
             50% {
-                opacity: 0.5;
+                opacity: 0.6;
+                transform: scale(1.2);
             }
         }
 
-        /* Responsive */
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes ctaGlow {
+            0%, 100% {
+                transform: translateX(0) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateX(20px) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
             
             .hero {
-                padding: 0 20px;
+                padding: 100px 20px 40px;
             }
             
             .product-visual {
-                width: 300px;
+                width: 320px;
                 height: 200px;
             }
             
-            .features-grid {
+            .features-grid,
+            .specs-grid,
+            .setup-steps {
                 grid-template-columns: 1fr;
+                gap: 24px;
             }
             
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .section-header {
+                margin-bottom: 80px;
+            }
+            
+            .features,
+            .specs,
+            .setup,
+            .cta {
+                padding: 100px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feature-card,
+            .spec-category {
+                padding: 32px 24px;
+            }
+            
+            .setup-step {
+                padding: 24px 16px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
+    <nav id="navbar">
         <div class="nav-container">
             <div class="logo">Smartium</div>
             <ul class="nav-links">
@@ -462,55 +755,58 @@
             <h1>Edge</h1>
             <div class="subtitle">Intelligent. Unified. Professional.</div>
             <p class="description">
-                The ultimate home automation server that seamlessly integrates KNX, Matter, DLNA, intercom, and CCTV systems into one powerful platform.
+                The ultimate home automation server that seamlessly integrates KNX, Matter, DLNA, intercom, and CCTV systems into one powerful, elegant platform.
             </p>
-            <div class="product-visual"></div>
+            <div class="product-showcase">
+                <div class="product-glow"></div>
+                <div class="product-visual"></div>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2>Built for professionals</h2>
-                <p>Edge delivers enterprise-grade performance with the simplicity your clients expect</p>
+                <p>Edge delivers enterprise-grade performance with the simplicity and elegance your clients expect from premium automation</p>
             </div>
             
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">KNX</div>
                     <h3>KNX Integration</h3>
-                    <p>Native KNX support with advanced group addressing, scene management, and real-time monitoring for professional installations.</p>
+                    <p>Native KNX support with advanced group addressing, sophisticated scene management, and real-time monitoring designed for professional installations.</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">M</div>
                     <h3>Matter Compatible</h3>
-                    <p>Future-proof connectivity with full Matter/Thread support, ensuring seamless integration with next-generation smart devices.</p>
+                    <p>Future-proof connectivity with comprehensive Matter/Thread support, ensuring seamless integration with next-generation smart devices and ecosystems.</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">📡</div>
                     <h3>DLNA Media Server</h3>
-                    <p>High-performance media streaming with transcoding support for 4K content across all connected devices.</p>
+                    <p>High-performance media streaming with hardware transcoding support for 4K content distribution across all connected devices and zones.</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">🔊</div>
                     <h3>Intercom System</h3>
-                    <p>Professional-grade audio intercom with multi-zone support, door integration, and crystal-clear communication.</p>
+                    <p>Professional-grade audio intercom with multi-zone support, seamless door integration, and crystal-clear communication throughout the property.</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">📹</div>
                     <h3>CCTV Management</h3>
-                    <p>Advanced video surveillance with AI-powered analytics, remote access, and enterprise-level security features.</p>
+                    <p>Advanced video surveillance with AI-powered analytics, secure remote access, and enterprise-level security features for complete peace of mind.</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">⚡</div>
                     <h3>Edge Computing</h3>
-                    <p>Local processing power ensures instant response times and maintains privacy with on-premise intelligence.</p>
+                    <p>Local processing power ensures instant response times and maintains privacy with on-premise intelligence and advanced automation logic.</p>
                 </div>
             </div>
         </div>
@@ -519,13 +815,13 @@
     <!-- Technical Specifications -->
     <section class="specs" id="specs">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2>Technical Excellence</h2>
-                <p>Engineered for reliability, built for scale</p>
+                <p>Engineered for reliability, optimized for performance, built to scale with your most demanding projects</p>
             </div>
             
             <div class="specs-grid">
-                <div class="spec-category">
+                <div class="spec-category reveal">
                     <h3>Performance</h3>
                     <div class="spec-item">
                         <span class="spec-label">Processor</span>
@@ -543,9 +839,13 @@
                         <span class="spec-label">Operating System</span>
                         <span class="spec-value">SmartiumOS (Linux-based)</span>
                     </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Boot Time</span>
+                        <span class="spec-value">< 30 seconds</span>
+                    </div>
                 </div>
                 
-                <div class="spec-category">
+                <div class="spec-category reveal">
                     <h3>Connectivity</h3>
                     <div class="spec-item">
                         <span class="spec-label">Ethernet</span>
@@ -563,9 +863,13 @@
                         <span class="spec-label">USB</span>
                         <span class="spec-value">USB 3.2 × 4 ports</span>
                     </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Bluetooth</span>
+                        <span class="spec-value">Bluetooth 5.3 LE</span>
+                    </div>
                 </div>
                 
-                <div class="spec-category">
+                <div class="spec-category reveal">
                     <h3>Protocols</h3>
                     <div class="spec-item">
                         <span class="spec-label">KNX/EIB</span>
@@ -573,7 +877,7 @@
                     </div>
                     <div class="spec-item">
                         <span class="spec-label">Matter/Thread</span>
-                        <span class="spec-value">1.0 compliant</span>
+                        <span class="spec-value">1.2 compliant</span>
                     </div>
                     <div class="spec-item">
                         <span class="spec-label">DLNA/UPnP</span>
@@ -583,9 +887,13 @@
                         <span class="spec-label">Video Standards</span>
                         <span class="spec-value">ONVIF, RTSP, H.265</span>
                     </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Audio Codecs</span>
+                        <span class="spec-value">AAC, FLAC, DSD</span>
+                    </div>
                 </div>
                 
-                <div class="spec-category">
+                <div class="spec-category reveal">
                     <h3>Environmental</h3>
                     <div class="spec-item">
                         <span class="spec-label">Operating Temp</span>
@@ -611,34 +919,34 @@
     <!-- Setup Section -->
     <section class="setup" id="setup">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2>Professional Installation</h2>
-                <p>Streamlined deployment for technicians and integrators</p>
+                <p>Streamlined deployment process designed specifically for technicians and system integrators</p>
             </div>
             
             <div class="setup-steps">
-                <div class="setup-step">
+                <div class="setup-step reveal">
                     <div class="step-number">1</div>
                     <h3>Network Configuration</h3>
-                    <p>Connect Edge to your network infrastructure and configure IP settings through the intuitive web interface.</p>
+                    <p>Connect Edge to your network infrastructure and configure IP settings through our intuitive web interface with automated discovery.</p>
                 </div>
                 
-                <div class="setup-step">
+                <div class="setup-step reveal">
                     <div class="step-number">2</div>
                     <h3>Protocol Integration</h3>
-                    <p>Import KNX project files, scan for Matter devices, and configure DLNA media sources with guided wizards.</p>
+                    <p>Import KNX project files, automatically scan for Matter devices, and configure DLNA media sources with our guided setup wizards.</p>
                 </div>
                 
-                <div class="setup-step">
+                <div class="setup-step reveal">
                     <div class="step-number">3</div>
                     <h3>Device Discovery</h3>
-                    <p>Automatic discovery and configuration of intercom stations, CCTV cameras, and connected devices.</p>
+                    <p>Automatic discovery and seamless configuration of intercom stations, CCTV cameras, and all connected smart devices across protocols.</p>
                 </div>
                 
-                <div class="setup-step">
+                <div class="setup-step reveal">
                     <div class="step-number">4</div>
                     <h3>System Validation</h3>
-                    <p>Comprehensive testing tools ensure all systems are properly integrated and functioning optimally.</p>
+                    <p>Comprehensive testing tools and diagnostics ensure all systems are properly integrated and functioning at optimal performance levels.</p>
                 </div>
             </div>
         </div>
@@ -646,12 +954,14 @@
 
     <!-- CTA Section -->
     <section class="cta" id="contact">
-        <div class="container">
-            <h2>Ready to transform your projects?</h2>
-            <p>Experience the power of unified home automation with Edge</p>
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-primary">Request Demo</a>
-                <a href="#" class="btn btn-secondary">Download Datasheet</a>
+        <div class="cta-content">
+            <div class="container">
+                <h2>Ready to transform your projects?</h2>
+                <p>Experience the power of unified, professional home automation with Edge</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">Request Demo</a>
+                    <a href="#" class="btn btn-secondary">Download Datasheet</a>
+                </div>
             </div>
         </div>
     </section>
@@ -664,47 +974,115 @@
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
+        // Enhanced smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Add scroll effect to navigation
+        // Enhanced navigation scroll effects
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById('navbar');
+
         window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(251, 251, 253, 0.95)';
+            const currentScrollY = window.scrollY;
+            
+            // Background opacity based on scroll
+            if (currentScrollY > 100) {
+                navbar.style.background = 'rgba(251, 251, 253, 0.95)';
+                navbar.style.borderBottomColor = 'rgba(0, 0, 0, 0.15)';
             } else {
-                nav.style.background = 'rgba(251, 251, 253, 0.8)';
+                navbar.style.background = 'rgba(251, 251, 253, 0.7)';
+                navbar.style.borderBottomColor = 'rgba(0, 0, 0, 0.1)';
             }
+            
+            // Hide/show navbar on scroll
+            if (currentScrollY > lastScrollY && currentScrollY > 200) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollY = currentScrollY;
         });
 
-        // Animate elements on scroll
+        // Intersection Observer for scroll reveal animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, index * 100); // Stagger animation
                 }
             });
         }, observerOptions);
 
-        // Observe all feature cards and spec categories
-        document.querySelectorAll('.feature-card, .spec-category, .setup-step').forEach(el => {
-            observer.observe(el);
+        // Observe all elements with reveal class
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            
+            if (hero && scrolled <= hero.offsetHeight) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Enhanced feature card interactions
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.03)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Product visual 3D tilt effect
+        const productVisual = document.querySelector('.product-visual');
+        if (productVisual) {
+            productVisual.addEventListener('mousemove', (e) => {
+                const rect = productVisual.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                productVisual.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            productVisual.addEventListener('mouseleave', () => {
+                productVisual.style.transform = 'rotateX(5deg) rotateY(-5deg) translateY(0)';
+            });
+        }
+
+        // Preload animations
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
         });
     </script>
 </body>
