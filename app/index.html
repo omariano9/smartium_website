@@ -135,23 +135,22 @@
       </div>
 
       <script>
-          // Get the current path and query parameters
-          const path = window.location.pathname;
-          const params = window.location.search;
+          // Get URL parameters
+          const params = new URLSearchParams(window.location.search);
+          const action = params.get('action');
 
-          // Construct the deep link
-          let deepLink = 'smartium://';
+          // Construct the deep link based on action
+          let deepLink = 'smartium://auth/';
 
-          // Map web paths to app paths
-          if (path.includes('/reset-password')) {
-              deepLink += 'auth/reset-password' + params;
-          } else if (path.includes('/register')) {
-              deepLink += 'auth/register' + params;
-          } else if (path.includes('/activate')) {
-              deepLink += 'auth/activate' + params;
+          if (action === 'reset-password') {
+              const token = params.get('token');
+              deepLink += `reset-password?token=${token}`;
+          } else if (action === 'register') {
+              const code = params.get('code');
+              deepLink += `register?code=${code}`;
           } else {
-              // Default redirect
-              deepLink += 'auth' + params;
+              // Default - just pass all params
+              deepLink += '?' + params.toString();
           }
 
           // Attempt to open the deep link
@@ -166,12 +165,6 @@
               const linkBox = document.getElementById('deep-link-box');
               linkBox.textContent = deepLink;
           }, 3000);
-
-          // Also handle specific routes
-          if (path === '/app' || path === '/app/') {
-              // This is the base redirect page
-              // You might want to redirect to a default location or show a different message
-          }
       </script>
   </body>
   </html>
