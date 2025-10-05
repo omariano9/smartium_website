@@ -77,62 +77,19 @@
             font-style: normal;
         }
 
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
             font-size: 22px;
-            color: var(--text-primary);
+            color: var(--primary-blue);
             letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .logo-icon {
-            width: 28px;
-            height: 28px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .logo:hover .logo-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .logo-icon .primary-face {
-            fill: var(--primary-blue);
-            transition: all 0.4s ease;
-        }
-
-        .logo-icon .secondary-face {
-            fill: var(--dark-blue);
-            transition: all 0.4s ease;
-        }
-
-        .logo-icon .accent-face {
-            fill: #00c7ff;
-            transition: all 0.4s ease;
-        }
-
-        .logo-icon .edge-line {
-            stroke: rgba(255, 255, 255, 0.3);
-            stroke-width: 0.5;
-            fill: none;
-            transition: all 0.4s ease;
-        }
-
-        .logo:hover .logo-icon .primary-face {
-            fill: #00c7ff;
-        }
-
-        .logo:hover .logo-icon .secondary-face {
-            fill: var(--primary-blue);
-        }
-
-        .logo:hover .logo-icon .accent-face {
-            fill: var(--dark-blue);
-        }
-
-        .logo:hover .logo-icon .edge-line {
-            stroke: rgba(255, 255, 255, 0.6);
-            stroke-width: 1;
+        .logo:hover {
+            color: var(--dark-blue);
         }
 
         .nav-links {
