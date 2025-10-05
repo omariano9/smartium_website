@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Commitment - Smartium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #007aff;
+            --dark-blue: #005ce6;
+            --green-accent: #30d158;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --background-primary: #fbfbfd;
+            --background-secondary: #f5f5f7;
+            --surface: #ffffff;
+            --surface-elevated: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-small: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(251, 251, 253, 0.95);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+            border-bottom: 0.5px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comfortaa-logo {
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 700;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--dark-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            font-size: 17px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f5f7 0%, #e8f5e9 100%);
+            padding: 140px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(48, 209, 88, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 72px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            letter-spacing: -0.04em;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-alt {
+            background: var(--surface);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+        }
+
+        .section-header p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 48px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface-elevated);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--green-accent), #00c853);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 17px;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 32px;
+            margin: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 32px;
+            background: var(--surface);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--green-accent);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Content Block */
+        .content-block {
+            max-width: 800px;
+        }
+
+        .content-block h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .content-block p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .content-block ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .content-block li {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            padding-left: 32px;
+            position: relative;
+        }
+
+        .content-block li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--green-accent);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--green-accent);
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            padding: 60px;
+            border-radius: 24px;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .cta-box h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: white;
+            color: var(--primary-blue);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 17px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            background: var(--background-secondary);
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                min-height: 60vh;
+                padding: 120px 20px 60px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .cta-box {
+                padding: 40px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo comfortaa-logo">
+                smartium
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#specs">Specifications</a></li>
+                <li><a href="/environment">Environment</a></li>
+                <li><a href="/support">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Building a Sustainable Future</h1>
+            <p>Our commitment to environmental responsibility guides every decision we make, from product design to end-of-life recycling.</p>
+        </div>
+    </section>
+
+    <!-- Our Commitment -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Environmental Responsibility</h2>
+                <p>Smartium is dedicated to minimizing environmental impact through responsible design, materials management, and lifecycle planning</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">♻️</div>
+                    <h3>Circular Design</h3>
+                    <p>Our products are engineered for longevity, repairability, and recyclability, reducing waste and extending product lifecycles.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌱</div>
+                    <h3>Responsible Materials</h3>
+                    <p>We carefully select materials that meet environmental standards while maintaining the professional quality our customers demand.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Energy Efficiency</h3>
+                    <p>Low power consumption across our product line helps reduce operational carbon footprint in every installation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Recyclable Materials</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25W</div>
+                    <div class="stat-label">Typical Power Usage</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Years Product Lifespan</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">RoHS Compliant</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Lifecycle -->
+    <section class="section">
+        <div class="container">
+            <div class="grid-2">
+                <div class="content-block">
+                    <h3>Sustainable Product Lifecycle</h3>
+                    <p>From initial design through end-of-life, we consider environmental impact at every stage. Our products are built to last, designed for efficient operation, and planned for responsible disposal.</p>
+                    <ul>
+                        <li>Energy-efficient operation reduces ongoing environmental impact</li>
+                        <li>Modular design enables repairs and upgrades</li>
+                        <li>Long operational lifespan minimizes replacement frequency</li>
+                        <li>Firmware updates extend product relevance</li>
+                        <li>Comprehensive recycling programs at end-of-life</li>
+                    </ul>
+                </div>
+                <div class="image-placeholder">🔄</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disposal & Recycling -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="grid-2">
+                <div class="image-placeholder">♻️</div>
+                <div class="content-block">
+                    <h3>Proper Disposal & Recycling</h3>
+                    <p>At the end of their service life, Smartium products must be disposed of responsibly to protect the environment and conserve natural resources.</p>
+                    <p><strong>Important:</strong> Electronic equipment must not be disposed of with household waste. Take your device to designated collection points for proper recycling.</p>
+                    <p>Our products contain valuable materials that can be recovered and reused. Proper recycling helps:</p>
+                    <ul>
+                        <li>Conserve natural resources</li>
+                        <li>Prevent soil and water contamination</li>
+                        <li>Reduce landfill waste</li>
+                        <li>Protect human health and environment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance & Standards -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Compliance & Standards</h2>
+                <p>Our products meet or exceed international environmental regulations and standards</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <h3>RoHS Compliant</h3>
+                    <p>All products comply with EU Restriction of Hazardous Substances directive, limiting use of specific hazardous materials.</p>
+                </div>
+
+                <div class="card">
+                    <h3>REACH Regulation</h3>
+                    <p>Full compliance with EU chemical safety regulation, ensuring responsible substance management.</p>
+                </div>
+
+                <div class="card">
+                    <h3>WEEE Directive</h3>
+                    <p>Following Waste Electrical and Electronic Equipment standards for proper disposal and recycling.</p>
+                </div>
+            </div>
+
+            <!-- CTA Box -->
+            <div class="cta-box">
+                <h3>Find Your Local Recycling Center</h3>
+                <p>Contact us for information about recycling programs and collection points in your region</p>
+                <a href="/support" class="btn">Contact Support</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Smartium, Inc. All rights reserved. | Environmental Responsibility</p>
+        </div>
+    </footer>
+</body>
+</html>

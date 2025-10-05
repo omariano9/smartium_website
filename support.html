@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - Smartium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #007aff;
+            --dark-blue: #005ce6;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --background-primary: #fbfbfd;
+            --background-secondary: #f5f5f7;
+            --surface: #ffffff;
+            --surface-elevated: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-small: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(251, 251, 253, 0.95);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+            border-bottom: 0.5px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comfortaa-logo {
+            font-family: "Comfortaa", sans-serif;
+            font-weight: 700;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--dark-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            font-size: 17px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f5f7 0%, #e3f2fd 100%);
+            padding: 140px 20px 80px;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 72px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            letter-spacing: -0.04em;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Quick Contact Section */
+        .quick-contact {
+            background: var(--surface);
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .contact-card {
+            background: var(--background-primary);
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .contact-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .contact-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            font-size: 17px;
+            margin-bottom: 16px;
+        }
+
+        .contact-card a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Section */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-alt {
+            background: var(--surface);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
+        }
+
+        .section-header p {
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+
+        /* Product Selector */
+        .product-selector {
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+
+        .selector-group {
+            margin-bottom: 24px;
+        }
+
+        .selector-group label {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        select {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 17px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--surface);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select:hover, select:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+        }
+
+        /* Resources Grid */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .resource-card {
+            background: var(--surface-elevated);
+            backdrop-filter: blur(20px);
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-large);
+            border-color: var(--primary-blue);
+        }
+
+        .resource-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-small);
+        }
+
+        .resource-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .resource-card p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: var(--shadow-small);
+        }
+
+        .faq-question {
+            padding: 24px 28px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            user-select: none;
+        }
+
+        .faq-toggle {
+            font-size: 24px;
+            color: var(--primary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 28px 24px 28px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* Warranty Box */
+        .warranty-box {
+            background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+            padding: 60px;
+            border-radius: 24px;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .warranty-box h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .warranty-box p {
+            font-size: 18px;
+            line-height: 1.7;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+
+        .warranty-box ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .warranty-box li {
+            font-size: 17px;
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+            opacity: 0.9;
+        }
+
+        .warranty-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 48px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--background-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            background: var(--background-secondary);
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 20px 60px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .contact-form,
+            .warranty-box {
+                padding: 32px 24px;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo comfortaa-logo">
+                smartium
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/#specs">Specifications</a></li>
+                <li><a href="/environment">Environment</a></li>
+                <li><a href="/support">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div>
+            <h1>We're Here to Help</h1>
+            <p>Professional support for system integrators and technicians</p>
+        </div>
+    </section>
+
+    <!-- Quick Contact -->
+    <section class="quick-contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email Support</h3>
+                    <p>24-48 hour response time</p>
+                    <a href="mailto:support@smartium.cloud">support@smartium.cloud</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">🌐</div>
+                    <h3>Web Portal</h3>
+                    <p>Access documentation & resources</p>
+                    <a href="https://smartium.cloud">smartium.cloud</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <h3>Technical Forum</h3>
+                    <p>Community support & discussions</p>
+                    <a href="/forum">Visit Forum</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Support -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Find Your Product</h2>
+                <p>Select your product to access specific documentation and resources</p>
+            </div>
+
+            <div class="product-selector">
+                <div class="selector-group">
+                    <label for="brand">Select Brand</label>
+                    <select id="brand">
+                        <option value="">Choose a brand...</option>
+                        <option value="samsung">Samsung Nasa</option>
+                        <option value="daikin">Daikin</option>
+                        <option value="mitsubishi-heavy">Mitsubishi Heavy Industries</option>
+                        <option value="mitsubishi-electric">Mitsubishi Electric</option>
+                        <option value="gree">Gree</option>
+                        <option value="lg">LG</option>
+                    </select>
+                </div>
+
+                <div class="selector-group">
+                    <label for="language">Preferred Language</label>
+                    <select id="language">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="it">Italiano</option>
+                        <option value="es">Español</option>
+                        <option value="de">Deutsch</option>
+                        <option value="nl">Nederlands</option>
+                        <option value="pt">Português</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="resources-grid">
+                <a href="/documentation" class="resource-card">
+                    <div class="resource-icon">📄</div>
+                    <h3>Product Datasheets</h3>
+                    <p>Complete technical specifications, installation guides, and product information</p>
+                </a>
+
+                <a href="/downloads/ets" class="resource-card">
+                    <div class="resource-icon">⚙️</div>
+                    <h3>ETS Files</h3>
+                    <p>Latest ETS product databases and configuration files for KNX programming</p>
+                </a>
+
+                <a href="/downloads/firmware" class="resource-card">
+                    <div class="resource-icon">🔄</div>
+                    <h3>Firmware Updates</h3>
+                    <p>Latest firmware releases with new features, improvements, and bug fixes</p>
+                </a>
+
+                <a href="/downloads/tools" class="resource-card">
+                    <div class="resource-icon">🛠️</div>
+                    <h3>Configuration Tools</h3>
+                    <p>Software utilities for device configuration, diagnostics, and commissioning</p>
+                </a>
+
+                <a href="/tutorials" class="resource-card">
+                    <div class="resource-icon">🎓</div>
+                    <h3>Video Tutorials</h3>
+                    <p>Step-by-step installation and configuration guides for quick deployment</p>
+                </a>
+
+                <a href="/integration-guides" class="resource-card">
+                    <div class="resource-icon">📚</div>
+                    <h3>Integration Guides</h3>
+                    <p>System integration documentation for seamless multi-protocol implementations</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common technical questions</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I update the firmware on my KNX gateway?
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Firmware updates can be performed via the KNX bus using ETS. Download the latest firmware from the downloads section, load it into ETS, and follow the on-screen programming instructions. Ensure the device remains powered during the update process.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is the maximum cable length for connecting to indoor units?
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            The maximum cable length is 328 ft (100 m). For installations exceeding 33 ft (10 m), install communication and power cables separately to prevent electromagnetic interference.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I control multiple HVAC brands with one KNX system?
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, each brand requires its specific gateway. You can integrate multiple gateways into one KNX system, allowing unified control of different HVAC brands through your building management system.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What certifications do I need to install these products?
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Installation should be performed by certified electricians or HVAC technicians. KNX programming requires ETS certification. We recommend KNX Partner or KNX Tutor certification for professional installations.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is technical support available in my language?
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We provide documentation in English, French, Italian, Spanish, German, Dutch, and Portuguese. Email support is primarily in English, but we can accommodate other languages with slightly longer response times.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warranty Information -->
+    <section class="section">
+        <div class="container">
+            <div class="warranty-box">
+                <h3>Warranty Information</h3>
+                <p>Smartium Inc. warrants the hardware product against defects in materials and workmanship for one year from the date of original retail purchase.</p>
+                
+                <p><strong>Warranty Coverage Includes:</strong></p>
+                <ul>
+                    <li>Manufacturing defects in materials or workmanship</li>
+                    <li>Functional failures under normal use conditions</li>
+                    <li>Repair or replacement at Smartium's discretion</li>
+                </ul>
+
+                <p><strong>Warranty Does Not Cover:</strong></p>
+                <ul>
+                    <li>Normal wear and tear</li>
+                    <li>Damage from accidents, abuse, or improper installation</li>
+                    <li>Damage from unauthorized modifications</li>
+                    <li>Damage from natural disasters or power surges</li>
+                </ul>
+
+                <p>To obtain warranty service, contact Smartium technical support with your proof of purchase and serial number. Service options depend on your location. For complete warranty terms, visit smartium.cloud/warranty</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2>Submit a Support Request</h2>
+                <p>Our technical team will respond within 24-48 hours</p>
+            </div>
+
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product">Product</label>
+                        <select id="product">
+                            <option value="">Select product...</option>
+                            <option value="samsung">Samsung Nasa KNX Gateway</option>
+                            <option value="daikin">Daikin KNX Gateway</option>
+                            <option value="mitsubishi-heavy">Mitsubishi Heavy KNX Gateway</option>
+                            <option value="mitsubishi-electric">Mitsubishi Electric KNX Gateway</option>
+                            <option value="gree">Gree KNX Gateway</option>
+                            <option value="lg">LG KNX Gateway</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Smartium, Inc. All rights reserved. | Professional Support</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(faqItem => {
+                    faqItem.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Form submission (placeholder)
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your support request. Our team will respond within 24-48 hours.');
+        });
+    </script>
+</body>
+</html>
